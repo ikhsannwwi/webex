@@ -226,6 +226,9 @@
                 data_table.ajax.url('{{ route('admin.user_groups.getData') }}?status=' + filterStatus)
                     .load();
             });
+            var options = {searchable: true, placeholder: 'select', searchtext: 'search', selectedtext: 'dipilih'};
+            var selectfilterstatus = NiceSelect.bind(document.getElementById("filterstatus"), options);
+            selectfilterstatus.update();
 
             function getStatus() {
                 return $("#filterstatus").val();

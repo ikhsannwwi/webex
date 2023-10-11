@@ -149,27 +149,6 @@ class UserGroupController extends Controller
         return redirect(route('admin.user_groups'))->with(['success' => 'Data berhasil disimpan.']);
     }
 
-    public function getDetail($id)
-    {
-        //Check permission
-        if (!isAllowed(static::$module, "detail")) {
-            abort(403);
-        }
-
-        $data = UserGroup::find($id);
-        if (!$data) {
-            return abort(404);
-        }
-        $modules = Module::with("access")->get();
-        $permission = getPermissionGroup($id);
-
-        return response()->json([
-            'data' => $data,
-            'modules' => $modules,
-            'permission' => $permission,
-        ]);
-    }
-
     public function edit($id)
     {
         //Check permission
@@ -280,6 +259,27 @@ class UserGroupController extends Controller
         createLog(static::$module, __FUNCTION__, $id,['Data yang dihapus' => $log]);
 
         return response()->json(['message' => 'User group deleted successfully']);
+    }
+    
+    public function getDetail($id)
+    {
+        //Check permission
+        if (!isAllowed(static::$module, "detail")) {
+            abort(403);
+        }
+
+        $data = UserGroup::find($id);
+        if (!$data) {
+            return abort(404);
+        }
+        $modules = Module::with("access")->get();
+        $permission = getPermissionGroup($id);
+
+        return response()->json([
+            'data' => $data,
+            'modules' => $modules,
+            'permission' => $permission,
+        ]);
     }
 
 

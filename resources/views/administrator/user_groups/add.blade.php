@@ -12,7 +12,7 @@
     @push('section_title')
         User Group
     @endpush
-    
+
     <div class="card">
         <div class="card-content">
             <div class="card-body">
@@ -68,24 +68,24 @@
                                                     $checked = '';
                                                 
                                                     echo '<span class="akses">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <input class="access_' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <input class="access_' .
                                                         $index .
                                                         '"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         type="checkbox"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         name="access[' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         type="checkbox"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         name="access[' .
                                                         $index .
                                                         '][module_access][' .
                                                         $row->id .
                                                         ']"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         value="1" ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         value="1" ' .
                                                         $checked .
                                                         '>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ' .
                                                         $row->name .
                                                         '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </span>';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </span>';
                                                     $ind++;
                                                 }
                                                 ?>
@@ -123,15 +123,15 @@
                     </div>
                     <div class="row">
                         <div class="col-12 d-flex justify-content-end">
-                            <button type="submit" id="formSubmit" class="btn btn-primary me-1 mb-1">
+                            <button type="submit" id="formSubmit" class="btn btn-primary mx-1 mb-1">
                                 <span class="indicator-label">Submit</span>
                                 <span class="indicator-progress" style="display: none;">
                                     Tunggu Sebentar...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
                             </button>
-                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            <a href="{{ route('admin.user_groups') }}" class="btn btn-danger me-1 mb-1">Cancel</a>
+                            <button type="reset" class="btn btn-secondary mx-1 mb-1">Reset</button>
+                            <a href="{{ route('admin.user_groups') }}" class="btn btn-danger mx-1 mb-1">Cancel</a>
                         </div>
                     </div>
                 </form>
@@ -156,6 +156,7 @@
 
             submitButton.addEventListener("click", async function(e) {
                 e.preventDefault();
+                indicatorBlock();
 
                 // Perform remote validation
                 const remoteValidationResult = await validateRemoteName();
@@ -169,6 +170,7 @@
                     firstNameColumn.addClass('is-invalid');
 
                     accessErrorName.text('Nama sudah dipakai');
+                    indicatorNone();
 
                     return;
                 } else {
@@ -185,6 +187,7 @@
                     $("#table-permissions").addClass('table-invalid'); // Add this line
                     document.getElementById("accessError").textContent =
                         "Pilih setidaknya salah satu modul akses";
+                    indicatorNone();
                     return;
                 } else {
                     $("#table-permissions").removeClass('table-invalid'); // Add this line
@@ -195,26 +198,16 @@
 
                 // Validate the form using Parsley
                 if ($(form).parsley().validate()) {
-                    // Disable the submit button and show the "Please wait..." message
-                    submitButton.querySelector('.indicator-label').style.display = 'none';
-                    submitButton.querySelector('.indicator-progress').style.display = 'inline-block';
+                    indicatorSubmit();
 
-                    // Perform your asynchronous form submission here
-                    // Simulating a 2-second delay for demonstration
-                    setTimeout(function() {
-                        // Re-enable the submit button and hide the "Please wait..." message
-                        submitButton.querySelector('.indicator-label').style.display =
-                            'inline-block';
-                        submitButton.querySelector('.indicator-progress').style.display =
-                            'none';
+                    // Submit the form
+                    form.submit();
 
-                        // Submit the form
-                        form.submit();
-                    }, 2000);
                 } else {
                     // Handle validation errors
                     const validationErrors = [];
                     $(form).find(':input').each(function() {
+                        indicatorNone();
                         const field = $(this);
                         if (!field.parsley().isValid()) {
                             const fieldName = field.attr('name');
@@ -225,6 +218,29 @@
                     console.log("Validation errors:", validationErrors.join('\n'));
                 }
             });
+
+            function indicatorSubmit() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+            }
+
+            function indicatorNone() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+                submitButton.disabled = false;
+            }
+
+            function indicatorBlock() {
+                // Disable the submit button and show the "Please wait..." message
+                submitButton.disabled = true;
+                submitButton.querySelector('.indicator-label').style.display = 'none';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'inline-block';
+            }
 
             async function validateRemoteName() {
                 const nameInput = $('#first-name-column');
