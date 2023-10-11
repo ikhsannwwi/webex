@@ -1,12 +1,12 @@
 @extends('administrator.layouts.main')
 
 @section('content')
-@push('section_header')
+    @push('section_header')
         <h1>profile</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item">Profile</div>
-            <div class="breadcrumb-item">{{auth()->user()->kode}}</div>
+            <div class="breadcrumb-item">{{ auth()->user()->kode }}</div>
         </div>
     @endpush
     @push('section_title')
@@ -71,8 +71,8 @@
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-instagram mr-2 icon-inline text-danger">
-                                            <rect x="2" y="2" width="20" height="20" rx="5"
-                                                ry="5"></rect>
+                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5">
+                                            </rect>
                                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                                         </svg>Instagram</h6>
@@ -80,9 +80,9 @@
                                         value="{{ $sosmed['instagram'] }}">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-facebook mr-2 icon-inline text-primary">
                                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
                                             </path>
@@ -235,6 +235,8 @@
             submitButton.addEventListener("click", async function(e) {
                 e.preventDefault();
 
+                indicatorBlock();
+
                 // Perform remote validation
                 const remoteValidationResult = await validateRemoteEmail();
                 const emailField = $("#emailField");
@@ -246,7 +248,7 @@
 
                     accessErrorEmail.text(remoteValidationResult
                         .errorMessage); // Set the error message from the response
-
+                    indicatorNone();
                     return;
                 } else {
                     accessErrorEmail.removeClass('invalid-feedback');
@@ -257,27 +259,16 @@
 
                 // Validate the form using Parsley
                 if ($(form).parsley().validate()) {
-                    // Disable the submit button and show the "Please wait..." message
-                    submitButton.querySelector('.indicator-label').style.display = 'none';
-                    submitButton.querySelector('.indicator-progress').style.display =
-                        'inline-block';
+                    indicatorSubmit();
 
-                    // Perform your asynchronous form submission here
-                    // Simulating a 2-second delay for demonstration
-                    setTimeout(function() {
-                        // Re-enable the submit button and hide the "Please wait..." message
-                        submitButton.querySelector('.indicator-label').style.display =
-                            'inline-block';
-                        submitButton.querySelector('.indicator-progress').style.display =
-                            'none';
-
-                        // Submit the form
-                        form.submit();
-                    }, 2000);
+                    // Submit the form
+                    form.submit();
                 } else {
                     // Handle validation errors
                     const validationErrors = [];
                     $(form).find(':input').each(function() {
+                        indicatorNone();
+
                         const field = $(this);
                         if (!field.parsley().isValid()) {
                             const attrName = field.attr('name');
@@ -289,6 +280,29 @@
                     console.log("Validation errors:", validationErrors.join('\n'));
                 }
             });
+
+            function indicatorSubmit() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+            }
+
+            function indicatorNone() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+                submitButton.disabled = false;
+            }
+
+            function indicatorBlock() {
+                // Disable the submit button and show the "Please wait..." message
+                submitButton.disabled = true;
+                submitButton.querySelector('.indicator-label').style.display = 'none';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'inline-block';
+            }
 
             async function validateRemoteEmail() {
                 const emailInput = $('#emailField');
