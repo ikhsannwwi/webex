@@ -51,6 +51,10 @@ class LogSystemController extends Controller
     }
 
     public function getDetail($id){
+        //Check permission
+        if (!isAllowed(static::$module, "detail")) {
+            abort(403);
+        }
 
         $data = Log::with('user')->find($id);
         if (!$data) {
@@ -99,6 +103,10 @@ class LogSystemController extends Controller
 
     public function generatePDF()
     {
+        //Check permission
+        if (!isAllowed(static::$module, "export")) {
+            abort(403);
+        }
         ini_set('max_execution_time', 600); // Set the maximum execution time to 600 seconds (5 minutes)
 
         $data = Log::with('user')->orderBy('created_at', 'desc')->get();
