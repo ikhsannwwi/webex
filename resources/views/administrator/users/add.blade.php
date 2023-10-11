@@ -10,7 +10,7 @@
         </div>
     @endpush
     @push('section_title')
-        User
+        Form User
     @endpush
     <!-- Basic Tables start -->
     <div class="card">
@@ -24,7 +24,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group mandatory">
                                 <label for="userGroupField" class="form-label">User Group</label>
-                                <select class="form-control" name="user_group" id="userGroupField"
+                                <select class="wide" name="user_group" id="userGroupField"
                                     data-parsley-required="true">
 
                                 </select>
@@ -117,15 +117,15 @@
                     </div>
                     <div class="row">
                         <div class="col-12 d-flex justify-content-end">
-                            <button type="submit" id="formSubmit" class="btn btn-primary me-1 mb-1">
+                            <button type="submit" id="formSubmit" class="btn btn-primary mx-1 mb-1">
                                 <span class="indicator-label">Submit</span>
                                 <span class="indicator-progress" style="display: none;">
                                     Tunggu Sebentar...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
                             </button>
-                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            <a href="{{ route('admin.users') }}" class="btn btn-danger me-1 mb-1">Cancel</a>
+                            <button type="reset" class="btn btn-secondary mx-1 mb-1">Reset</button>
+                            <a href="{{ route('admin.users') }}" class="btn btn-danger mx-1 mb-1">Cancel</a>
                         </div>
                     </div>
                 </form>
@@ -191,6 +191,7 @@
 
             submitButton.addEventListener("click", async function(e) {
                 e.preventDefault();
+                indicatorBlock();
 
                 // Perform remote validation
                 const remoteValidationResult = await validateRemoteEmail();
@@ -204,7 +205,9 @@
                     accessErrorEmail.text(remoteValidationResult
                         .errorMessage); // Set the error message from the response
 
+                    indicatorNone();
                     return;
+
                 } else {
                     accessErrorEmail.removeClass('invalid-feedback');
                     emailField.removeClass('is-invalid');
@@ -222,7 +225,9 @@
                     accessErrorKode.text(remoteValidationResultKode
                         .errorMessage); // Set the error message from the response
 
+                    indicatorNone();
                     return;
+
                 } else {
                     accessErrorKode.removeClass('invalid-feedback');
                     kodeField.removeClass('is-invalid');
@@ -240,7 +245,9 @@
                     accessErrorKode.text(
                         'Kode harus 12 characters dan diawali dengan sanapp- lalu diakhiri oleh 5 uniqid.'
                     );
+                    indicatorNone();
                     return;
+
                 } else {
                     accessErrorKode.removeClass('invalid-feedback');
                     kodeField.removeClass('is-invalid');
@@ -251,6 +258,7 @@
 
                 if (passwordField !== '') {
                     if (!validatePasswordConfirmation()) {
+
                         return;
                     }
                 }
@@ -259,27 +267,15 @@
 
                 // Validate the form using Parsley
                 if ($(form).parsley().validate()) {
-                    // Disable the submit button and show the "Please wait..." message
-                    submitButton.querySelector('.indicator-label').style.display = 'none';
-                    submitButton.querySelector('.indicator-progress').style.display =
-                        'inline-block';
+                    indicatorNone();
 
-                    // Perform your asynchronous form submission here
-                    // Simulating a 2-second delay for demonstration
-                    setTimeout(function() {
-                        // Re-enable the submit button and hide the "Please wait..." message
-                        submitButton.querySelector('.indicator-label').style.display =
-                            'inline-block';
-                        submitButton.querySelector('.indicator-progress').style.display =
-                            'none';
-
-                        // Submit the form
-                        form.submit();
-                    }, 2000);
+                    // Submit the form
+                    form.submit();
                 } else {
                     // Handle validation errors
                     const validationErrors = [];
                     $(form).find(':input').each(function() {
+                        indicatorNone();
                         const field = $(this);
                         if (!field.parsley().isValid()) {
                             const attrName = field.attr('name');
@@ -291,6 +287,29 @@
                     console.log("Validation errors:", validationErrors.join('\n'));
                 }
             });
+
+            function indicatorSubmit() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+            }
+
+            function indicatorNone() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+                submitButton.disabled = false;
+            }
+
+            function indicatorBlock() {
+                // Disable the submit button and show the "Please wait..." message
+                submitButton.disabled = true;
+                submitButton.querySelector('.indicator-label').style.display = 'none';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'inline-block';
+            }
 
             async function validateRemoteEmail() {
                 const emailInput = $('#emailField');
@@ -363,12 +382,14 @@
                 if (passwordField.val().length < 8) {
                     passwordField.addClass('is-invalid');
                     accessErrorPassword.text('Password harus memiliki setidaknya 8 karakter');
+                    indicatorNone();
                     return false;
                 } else if (passwordField.val() !== konfirmasiPasswordField.val()) {
                     passwordField.removeClass('is-invalid');
                     accessErrorPassword.text('');
                     konfirmasiPasswordField.addClass('is-invalid');
                     accessErrorKonfirmasiPassword.text('Konfirmasi Password harus sama dengan Password');
+                    indicatorNone();
                     return false;
                 } else {
                     passwordField.removeClass('is-invalid');
@@ -381,7 +402,14 @@
 
 
 
+            var options = {
+                searchable: true,
+                placeholder: 'select',
+                searchtext: 'search',
+                selectedtext: 'dipilih'
+            };
             var optionUserGroup = $('#userGroupField');
+            var selectuserGroupField = NiceSelect.bind(document.getElementById("userGroupField"), options);
 
 
             optionUserGroup.html(
@@ -412,6 +440,8 @@
                     var finalDropdownHtml = '<option value="">Pilih Data</option>' + optionsHtml;
 
                     optionUserGroup.html(finalDropdownHtml);
+
+                    selectuserGroupField.update();
 
                     loadingSpinner.hide(); // Hide the loading spinner after data is loaded
                 },

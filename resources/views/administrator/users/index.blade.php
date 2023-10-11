@@ -234,6 +234,9 @@
 
             var optionUserGroup = $('#filterusergroup');
 
+            var options = {searchable: true, placeholder: 'select', searchtext: 'search', selectedtext: 'dipilih'};
+            var selectfilterusergroup = NiceSelect.bind(document.getElementById("filterusergroup"), options);
+
 
             optionUserGroup.html(
                 '<option id="loadingSpinner" style="display: none;">' +
@@ -263,6 +266,7 @@
                     var finalDropdownHtml = '<option value="">Semua</option>' + optionsHtml;
 
                     optionUserGroup.html(finalDropdownHtml);
+                    selectfilterusergroup.update();
 
                     loadingSpinner.hide(); // Hide the loading spinner after data is loaded
                 },
@@ -287,6 +291,10 @@
                         '|usergroup=' + filterUserGroup)
                     .load();
             });
+
+            var options = {searchable: true, placeholder: 'select', searchtext: 'search', selectedtext: 'dipilih'};
+            var selectfilterstatus = NiceSelect.bind(document.getElementById("filterstatus"), options);
+            selectfilterstatus.update();
 
             function getStatus() {
                 return $("#filterstatus").val();

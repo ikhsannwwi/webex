@@ -1,7 +1,7 @@
 @extends('administrator.layouts.main')
 
 @section('content')
-@push('section_header')
+    @push('section_header')
         <h1>Users</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
@@ -13,143 +13,139 @@
         User
     @endpush
     <!-- Basic Tables start -->
-        <div class="card">
-            <div class="card-content">
-                <div class="card-body">
-                    <form action="{{ route('admin.users.update') }}" method="post" enctype="multipart/form-data"
-                        class="form" id="form" data-parsley-validate>
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" id="inputId" name="id" value="{{ $data->id }}">
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="userGroupField" class="form-label">User Group</label>
-                                    <select class="form-control" name="user_group" id="userGroupField"
-                                        data-parsley-required="true">
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <form action="{{ route('admin.users.update') }}" method="post" enctype="multipart/form-data" class="form"
+                    id="form" data-parsley-validate>
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="inputId" name="id" value="{{ $data->id }}">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="userGroupField" class="form-label">User Group</label>
+                                <select class="form-control" name="user_group" id="userGroupField"
+                                    data-parsley-required="true">
 
-                                    </select>
-                                </div>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="nameField" class="form-label">Nama</label>
-                                    <input type="text" id="nameField" class="form-control" placeholder="Masukan Nama"
-                                        value="{{ $data->name }}" name="name" autocomplete="off"
-                                        data-parsley-required="true">
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="nameField" class="form-label">Nama</label>
+                                <input type="text" id="nameField" class="form-control" placeholder="Masukan Nama"
+                                    value="{{ $data->name }}" name="name" autocomplete="off"
+                                    data-parsley-required="true">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="emailField" class="form-label">Email</label>
-                                    <input type="text" id="emailField" class="form-control" placeholder="Masukan Email"
-                                        value="{{ $data->email }}" name="email" autocomplete="off"
-                                        data-parsley-required="true">
-                                    <div class="" style="color: #dc3545" id="accessErrorEmail"></div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="emailField" class="form-label">Email</label>
+                                <input type="text" id="emailField" class="form-control" placeholder="Masukan Email"
+                                    value="{{ $data->email }}" name="email" autocomplete="off"
+                                    data-parsley-required="true">
+                                <div class="" style="color: #dc3545" id="accessErrorEmail"></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="kodeField" class="form-label">Kode</label>
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <input type="text" id="kodeField" class="form-control"
-                                                placeholder="Masukan Kode" name="kode" autocomplete="off"
-                                                data-parsley-required="true" value="{{ $data->kode }}">
-                                            <div class="" style="color: #dc3545" id="accessErrorKode"></div>
-                                        </div>
-                                        <div class="col-2">
-                                            <a href="javascript:void(0)" class="btn btn-primary"
-                                                id="buttonGenerateKode"><span class="indicator-label-kode">Generate</span>
-                                                <span class="indicator-progress-kode" style="display: none;">
-                                                    <div class="d-flex">
-                                                        Generate...
-                                                        <span
-                                                            class="spinner-border spinner-border-sm align-middle ms-2 mt-1"></span>
-                                                    </div>
-                                                </span>
-                                            </a>
-                                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="kodeField" class="form-label">Kode</label>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="text" id="kodeField" class="form-control" placeholder="Masukan Kode"
+                                            name="kode" autocomplete="off" data-parsley-required="true"
+                                            value="{{ $data->kode }}">
+                                        <div class="" style="color: #dc3545" id="accessErrorKode"></div>
+                                    </div>
+                                    <div class="col-2">
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="buttonGenerateKode"><span
+                                                class="indicator-label-kode">Generate</span>
+                                            <span class="indicator-progress-kode" style="display: none;">
+                                                <div class="d-flex">
+                                                    Generate...
+                                                    <span
+                                                        class="spinner-border spinner-border-sm align-middle ms-2 mt-1"></span>
+                                                </div>
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="passwordField" class="form-label">Password</label>
-                                    <input type="text" id="passwordField" class="form-control"
-                                        placeholder="Masukan Password" name="password" autocomplete="off">
-                                    <div class="" style="color: #dc3545" id="accessErrorPasssword"></div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="passwordField" class="form-label">Password</label>
+                                <input type="text" id="passwordField" class="form-control" placeholder="Masukan Password"
+                                    name="password" autocomplete="off">
+                                <div class="" style="color: #dc3545" id="accessErrorPasssword"></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="form-group mandatory">
-                                    <label for="konfirmasiPasswordField" class="form-label">Konfirmasi Password</label>
-                                    <input type="text" id="konfirmasiPasswordField" class="form-control"
-                                        placeholder="Masukan Konfirmasi Password" name="konfirmasi_password"
-                                        autocomplete="off">
-                                    <div class="" style="color: #dc3545" id="accessErrorKonfirmasiPasssword"></div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="konfirmasiPasswordField" class="form-label">Konfirmasi Password</label>
+                                <input type="text" id="konfirmasiPasswordField" class="form-control"
+                                    placeholder="Masukan Konfirmasi Password" name="konfirmasi_password"
+                                    autocomplete="off">
+                                <div class="" style="color: #dc3545" id="accessErrorKonfirmasiPasssword"></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class='form-group mandatory'>
-                                    <fieldset>
-                                        <label class="form-label">
-                                            Status
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class='form-group mandatory'>
+                                <fieldset>
+                                    <label class="form-label">
+                                        Status
+                                    </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status"
+                                            id="flexRadioDefault1" {{ $data->status ? 'checked' : '' }} value="1">
+                                        <label class="form-check-label form-label" for="flexRadioDefault1">
+                                            Aktif
                                         </label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status"
-                                                id="flexRadioDefault1" {{ $data->status ? 'checked' : '' }}
-                                                value="1">
-                                            <label class="form-check-label form-label" for="flexRadioDefault1">
-                                                Aktif
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status"
-                                                id="flexRadioDefault2" {{ !$data->status ? 'checked' : '' }}
-                                                value="0">
-                                            <label class="form-check-label form-label" for="flexRadioDefault2">
-                                                Tidak Aktif
-                                            </label>
-                                        </div>
-                                    </fieldset>
-                                </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status"
+                                            id="flexRadioDefault2" {{ !$data->status ? 'checked' : '' }} value="0">
+                                        <label class="form-check-label form-label" for="flexRadioDefault2">
+                                            Tidak Aktif
+                                        </label>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" id="formSubmit" class="btn btn-primary me-1 mb-1">
-                                    <span class="indicator-label">Submit</span>
-                                    <span class="indicator-progress" style="display: none;">
-                                        Tunggu Sebentar...
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
-                                </button>
-                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                                <a href="{{ route('admin.users') }}" class="btn btn-danger me-1 mb-1">Cancel</a>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" id="formSubmit" class="btn btn-primary mx-1 mb-1">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress" style="display: none;">
+                                    Tunggu Sebentar...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <button type="reset" class="btn btn-secondary mx-1 mb-1">Reset</button>
+                            <a href="{{ route('admin.users') }}" class="btn btn-danger mx-1 mb-1">Cancel</a>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
     <!-- Basic Tables end -->
 @endsection
-
-
 
 @push('js')
     <script src="{{ asset('templateAdmin/assets/extensions/parsleyjs/parsley.min.js') }}"></script>
@@ -204,6 +200,7 @@
 
             submitButton.addEventListener("click", async function(e) {
                 e.preventDefault();
+                indicatorBlock();
 
                 // Perform remote validation
                 const remoteValidationResult = await validateRemoteEmail();
@@ -217,7 +214,9 @@
                     accessErrorEmail.text(remoteValidationResult
                         .errorMessage); // Set the error message from the response
 
+                    indicatorNone();
                     return;
+
                 } else {
                     accessErrorEmail.removeClass('invalid-feedback');
                     emailField.removeClass('is-invalid');
@@ -235,7 +234,9 @@
                     accessErrorKode.text(remoteValidationResultKode
                         .errorMessage); // Set the error message from the response
 
+                    indicatorNone();
                     return;
+
                 } else {
                     accessErrorKode.removeClass('invalid-feedback');
                     kodeField.removeClass('is-invalid');
@@ -250,8 +251,12 @@
                     accessErrorKode.addClass('invalid-feedback');
                     kodeField.addClass('is-invalid');
 
-                    accessErrorKode.text('Kode harus 12 characters dan diawali dengan sanapp- lalu diakhiri oleh 5 uniqid.');
+                    accessErrorKode.text(
+                        'Kode harus 12 characters dan diawali dengan sanapp- lalu diakhiri oleh 5 uniqid.'
+                    );
+                    indicatorNone();
                     return;
+
                 } else {
                     accessErrorKode.removeClass('invalid-feedback');
                     kodeField.removeClass('is-invalid');
@@ -262,6 +267,7 @@
 
                 if (passwordField !== '') {
                     if (!validatePasswordConfirmation()) {
+
                         return;
                     }
                 }
@@ -270,27 +276,15 @@
 
                 // Validate the form using Parsley
                 if ($(form).parsley().validate()) {
-                    // Disable the submit button and show the "Please wait..." message
-                    submitButton.querySelector('.indicator-label').style.display = 'none';
-                    submitButton.querySelector('.indicator-progress').style.display =
-                        'inline-block';
+                    indicatorNone();
 
-                    // Perform your asynchronous form submission here
-                    // Simulating a 2-second delay for demonstration
-                    setTimeout(function() {
-                        // Re-enable the submit button and hide the "Please wait..." message
-                        submitButton.querySelector('.indicator-label').style.display =
-                            'inline-block';
-                        submitButton.querySelector('.indicator-progress').style.display =
-                            'none';
-
-                        // Submit the form
-                        form.submit();
-                    }, 2000);
+                    // Submit the form
+                    form.submit();
                 } else {
                     // Handle validation errors
                     const validationErrors = [];
                     $(form).find(':input').each(function() {
+                        indicatorNone();
                         const field = $(this);
                         if (!field.parsley().isValid()) {
                             const attrName = field.attr('name');
@@ -302,6 +296,29 @@
                     console.log("Validation errors:", validationErrors.join('\n'));
                 }
             });
+
+            function indicatorSubmit() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+            }
+
+            function indicatorNone() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+                submitButton.disabled = false;
+            }
+
+            function indicatorBlock() {
+                // Disable the submit button and show the "Please wait..." message
+                submitButton.disabled = true;
+                submitButton.querySelector('.indicator-label').style.display = 'none';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'inline-block';
+            }
 
             async function validateRemoteEmail() {
                 const emailInput = $('#emailField');
@@ -387,12 +404,14 @@
                 if (passwordField.val().length < 8) {
                     passwordField.addClass('is-invalid');
                     accessErrorPassword.text('Password harus memiliki setidaknya 8 karakter');
+                        indicatorNone();
                     return false;
                 } else if (passwordField.val() !== konfirmasiPasswordField.val()) {
                     passwordField.removeClass('is-invalid');
                     accessErrorPassword.text('');
                     konfirmasiPasswordField.addClass('is-invalid');
                     accessErrorKonfirmasiPassword.text('Konfirmasi Password harus sama dengan Password');
+                        indicatorNone();
                     return false;
                 } else {
                     passwordField.removeClass('is-invalid');
@@ -405,7 +424,14 @@
 
 
 
+            var options = {
+                searchable: true,
+                placeholder: 'select',
+                searchtext: 'search',
+                selectedtext: 'dipilih'
+            };
             var optionUserGroup = $('#userGroupField');
+            var selectuserGroupField = NiceSelect.bind(document.getElementById("userGroupField"), options);
 
 
             optionUserGroup.html(
@@ -445,6 +471,7 @@
                     } else {
                         optionUserGroup.prepend('<option value="" selected>Pilih Data</option>');
                     }
+                    optionUserGroup.update();
                 },
                 error: function() {
                     // Handle the error case if the AJAX request fails
