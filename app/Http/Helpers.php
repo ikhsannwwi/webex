@@ -14,6 +14,11 @@ function asset_administrator($url)
 	return asset('administrator/' . $url);
 }
 
+function asset_eskul($url)
+{
+	return asset('administrator/assets/media/eskul/' . $url);
+}
+
 function template_stisla($url)
 {
 	return asset('templateStisla/dist/assets/' . $url);
@@ -32,6 +37,9 @@ function upload_path($type = '', $file = '')
 			break;
 		case 'profile':
 			$target_folder = 'profile';
+			break;
+		case 'eskul':
+			$target_folder = 'eskul';
 			break;
 		default:
 			$target_folder = '';
@@ -54,6 +62,9 @@ function img_src($image = '', $img_type = '')
 				break;
 			case 'profile':
 				$folder = '/profile/';
+				break;
+			case 'eskul':
+				$folder = '/eskul/';
 				break;
 			default:
 				$folder = '/';
