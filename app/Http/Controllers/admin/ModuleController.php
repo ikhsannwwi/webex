@@ -110,7 +110,7 @@ class ModuleController extends Controller
     public function update(Request $request)
     {
         // Check permission for updating
-        if (!isAllowed(static::$module, "update")) {
+        if (!isAllowed(static::$module, "edit")) {
             abort(403);
         }
 

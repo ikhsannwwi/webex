@@ -20,7 +20,7 @@
                         <h4>List Data</h4>
                     </div>
                     <div class="col-4" style="display: flex; justify-content: flex-end;">
-                        @if (isallowed('user', 'add'))
+                        @if (isallowed('module_management', 'add'))
                             <a href="{{ route('admin.module.add') }}" class="btn btn-primary">Tambah Data</a>
                         @endif
                     </div>

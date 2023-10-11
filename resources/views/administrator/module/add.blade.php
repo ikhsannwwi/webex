@@ -16,7 +16,8 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="{{ route('admin.module.save') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate>
+                <form action="{{ route('admin.module.save') }}" method="post" enctype="multipart/form-data" id="form"
+                    data-parsley-validate>
                     @csrf
                     @method('POST')
                     <div class="card-header">
@@ -28,12 +29,13 @@
                                 <div class="form-group mandatory">
                                     <label for="namaField" class="form-label">Nama</label>
                                     <input type="text" id="namaField" class="form-control" placeholder="Masukan Nama"
-                                        name="name" autocomplete="off"  data-parsley-required="true">
+                                        name="name" autocomplete="off" data-parsley-required="true">
                                 </div>
                                 <div class="form-group mandatory">
                                     <label for="identifierField" class="form-label">Identifier</label>
                                     <input type="text" id="identifierField" class="form-control"
-                                        placeholder="Masukan Identifier" name="identifiers" autocomplete="off"  data-parsley-required="true">
+                                        placeholder="Masukan Identifier" name="identifiers" autocomplete="off"
+                                        data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
@@ -43,8 +45,8 @@
                                             <div class="col-md-5 col-11">
                                                 <div class="form-group mandatory">
                                                     <label class="form-label">Tipe</label>
-                                                    <select class="modul_akses-tipe form-control" data-parsley-required="true"
-                                                         name="modul_akses[0][tipe]">
+                                                    <select class="modul_akses-tipe form-control"
+                                                        data-parsley-required="true" name="modul_akses[0][tipe]">
                                                         <option value="">Please Select</option>
                                                         <option value="page">Elemen Standar</option>
                                                         <option value="element">Elemen Lainnya</option>
@@ -81,15 +83,15 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <button type="submit" id="formSubmit" class="btn btn-primary me-1 mb-1">
+                        <button type="submit" id="formSubmit" class="btn btn-primary mx-1 mb-1">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress" style="display: none;">
                                 Tunggu Sebentar...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                             </span>
                         </button>
-                        <button type="reset" class="btn btn-secondary me-1 mb-1">Reset</button>
-                        <a href="{{route('admin.module')}}" class="btn btn-danger me-1 mb-1">Kembali</a>
+                        <button type="reset" class="btn btn-secondary mx-1 mb-1">Reset</button>
+                        <a href="{{ route('admin.module') }}" class="btn btn-danger mx-1 mb-1">Kembali</a>
                     </div>
                 </form>
             </div>
@@ -182,29 +184,18 @@
             submitButton.addEventListener("click", async function(e) {
                 e.preventDefault();
 
+                indicatorBlock();
+
                 // Validate the form using Parsley
                 if ($(form).parsley().validate()) {
-                    // Disable the submit button and show the "Please wait..." message
-                    submitButton.querySelector('.indicator-label').style.display = 'none';
-                    submitButton.querySelector('.indicator-progress').style.display =
-                        'inline-block';
-
-                    // Perform your asynchronous form submission here
-                    // Simulating a 2-second delay for demonstration
-                    setTimeout(function() {
-                        // Re-enable the submit button and hide the "Please wait..." message
-                        submitButton.querySelector('.indicator-label').style.display =
-                            'inline-block';
-                        submitButton.querySelector('.indicator-progress').style.display =
-                            'none';
-
-                        // Submit the form
-                        form.submit();
-                    }, 2000);
+                    indicatorSubmit();
+                    // Submit the form
+                    form.submit();
                 } else {
                     // Handle validation errors
                     const validationErrors = [];
                     $(form).find(':input').each(function() {
+                        indicatorNone();
                         const field = $(this);
                         if (!field.parsley().isValid()) {
                             const attrName = field.attr('name');
@@ -216,6 +207,29 @@
                     console.log("Validation errors:", validationErrors.join('\n'));
                 }
             });
+
+            function indicatorSubmit() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+            }
+
+            function indicatorNone() {
+                submitButton.querySelector('.indicator-label').style.display =
+                    'inline-block';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'none';
+                submitButton.disabled = false;
+            }
+
+            function indicatorBlock() {
+                // Disable the submit button and show the "Please wait..." message
+                submitButton.disabled = true;
+                submitButton.querySelector('.indicator-label').style.display = 'none';
+                submitButton.querySelector('.indicator-progress').style.display =
+                    'inline-block';
+            }
 
         });
 
