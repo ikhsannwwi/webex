@@ -12,6 +12,8 @@
 
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="{{template_stisla('modules/bootstrap-social/bootstrap-social.css')}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css">
+
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{template_stisla('css/style.css')}}">
@@ -43,6 +45,7 @@
   <script src="{{template_stisla('js/stisla.js')}}"></script>
   
   <!-- JS Libraies -->
+  <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
 
   <!-- Page Specific JS File -->
   
