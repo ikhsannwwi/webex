@@ -4,7 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\viewController;
+use App\Http\Controllers\admin\EskulController;
+use App\Http\Controllers\admin\KelasController;
+use App\Http\Controllers\admin\JadwalController;
 use App\Http\Controllers\admin\ModuleController;
+use App\Http\Controllers\admin\SekbidController;
+use App\Http\Controllers\admin\AnggotaController;
+use App\Http\Controllers\admin\JurusanController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\DashboardController;
@@ -25,6 +31,8 @@ use App\Http\Controllers\admin\UserGroupController;
 // ------------------------------------------  Admin -----------------------------------------------------------------
 Route::prefix('admin')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('admin.login');
+    Route::post('login/checkEmail', [AuthController::class, 'checkEmail'])->name('admin.login.checkEmail');
+    Route::post('login/checkPassword', [AuthController::class, 'checkPassword'])->name('admin.login.checkPassword');
     Route::post('loginProses', [AuthController::class, 'loginProses'])->name('admin.loginProses');
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
     
@@ -94,5 +102,82 @@ Route::prefix('admin')->group(function () {
         Route::put('module/update', [ModuleController::class, 'update'])->name('admin.module.update');
         Route::delete('module/delete', [ModuleController::class, 'delete'])->name('admin.module.delete');
         Route::get('module/getDetail-{id}', [ModuleController::class, 'getDetail'])->name('admin.module.getDetail');
+        
+        //Jadwal
+        Route::get('jadwal', [JadwalController::class, 'index'])->name('admin.jadwal');
+        Route::get('jadwal/add', [JadwalController::class, 'add'])->name('admin.jadwal.add');
+        Route::get('jadwal/getData', [JadwalController::class, 'getData'])->name('admin.jadwal.getData');
+        Route::post('jadwal/save', [JadwalController::class, 'save'])->name('admin.jadwal.save');
+        Route::get('jadwal/edit/{id}', [JadwalController::class, 'edit'])->name('admin.jadwal.edit');
+        Route::put('jadwal/update', [JadwalController::class, 'update'])->name('admin.jadwal.update');
+        Route::delete('jadwal/delete', [JadwalController::class, 'delete'])->name('admin.jadwal.delete');
+        Route::post('jadwal/checkHari',[JadwalController::class, 'checkHari'])->name('admin.jadwal.checkHari');
+        Route::get('jadwal/getHari', [JadwalController::class, 'getHari'])->name('admin.jadwal.getHari');
+        
+        //Sekbid
+        Route::get('sekbid', [SekbidController::class, 'index'])->name('admin.sekbid');
+        Route::get('sekbid/add', [SekbidController::class, 'add'])->name('admin.sekbid.add');
+        Route::get('sekbid/getData', [SekbidController::class, 'getData'])->name('admin.sekbid.getData');
+        Route::post('sekbid/save', [SekbidController::class, 'save'])->name('admin.sekbid.save');
+        Route::get('sekbid/edit/{id}', [SekbidController::class, 'edit'])->name('admin.sekbid.edit');
+        Route::put('sekbid/update', [SekbidController::class, 'update'])->name('admin.sekbid.update');
+        Route::delete('sekbid/delete', [SekbidController::class, 'delete'])->name('admin.sekbid.delete');
+        Route::post('sekbid/checkTingkat',[SekbidController::class, 'checkTingkat'])->name('admin.sekbid.checkTingkat');
+        Route::get('sekbid/getDetail-{id}', [SekbidController::class, 'getDetail'])->name('admin.sekbid.getDetail');
+
+        //Ekstrakurikuler
+        Route::get('eskul', [EskulController::class, 'index'])->name('admin.eskul');
+        Route::get('eskul/add', [EskulController::class, 'add'])->name('admin.eskul.add');
+        Route::get('eskul/getData', [EskulController::class, 'getData'])->name('admin.eskul.getData');
+        Route::post('eskul/save', [EskulController::class, 'save'])->name('admin.eskul.save');
+        Route::get('eskul/edit/{id}', [EskulController::class, 'edit'])->name('admin.eskul.edit');
+        Route::put('eskul/update', [EskulController::class, 'update'])->name('admin.eskul.update');
+        Route::delete('eskul/delete', [EskulController::class, 'delete'])->name('admin.eskul.delete');
+        Route::get('eskul/getDetail-{id}', [EskulController::class, 'getDetail'])->name('admin.eskul.getDetail');
+        Route::post('eskul/checkNama',[EskulController::class, 'checkNama'])->name('admin.eskul.checkNama');
+        Route::get('eskul/getSekbid', [EskulController::class, 'getSekbid'])->name('admin.eskul.getSekbid');
+        Route::get('eskul/getJadwal', [EskulController::class, 'getJadwal'])->name('admin.eskul.getJadwal');
+
+        Route::get('eskul/arsip',[EskulController::class, 'arsip'])->name('admin.eskul.arsip');
+        Route::get('eskul/arsip/getDataArsip',[EskulController::class, 'getDataArsip'])->name('admin.eskul.getDataArsip');
+        Route::put('eskul/arsip/restore',[EskulController::class, 'restore'])->name('admin.eskul.restore');
+        Route::delete('eskul/arsip/forceDelete',[EskulController::class, 'forceDelete'])->name('admin.eskul.forceDelete');
+
+        //Kelas
+        Route::get('kelas', [KelasController::class, 'index'])->name('admin.kelas');
+        Route::get('kelas/add', [KelasController::class, 'add'])->name('admin.kelas.add');
+        Route::get('kelas/getData', [KelasController::class, 'getData'])->name('admin.kelas.getData');
+        Route::post('kelas/save', [KelasController::class, 'save'])->name('admin.kelas.save');
+        Route::get('kelas/edit/{id}', [KelasController::class, 'edit'])->name('admin.kelas.edit');
+        Route::put('kelas/update', [KelasController::class, 'update'])->name('admin.kelas.update');
+        Route::delete('kelas/delete', [KelasController::class, 'delete'])->name('admin.kelas.delete');
+        Route::post('kelas/checkKelas',[KelasController::class, 'checkKelas'])->name('admin.kelas.checkKelas');
+        Route::post('kelas/checkKodeRomawi',[KelasController::class, 'checkKodeRomawi'])->name('admin.kelas.checkKodeRomawi');
+        
+        //Jurusan
+        Route::get('jurusan', [JurusanController::class, 'index'])->name('admin.jurusan');
+        Route::get('jurusan/add', [JurusanController::class, 'add'])->name('admin.jurusan.add');
+        Route::get('jurusan/getData', [JurusanController::class, 'getData'])->name('admin.jurusan.getData');
+        Route::post('jurusan/save', [JurusanController::class, 'save'])->name('admin.jurusan.save');
+        Route::get('jurusan/edit/{id}', [JurusanController::class, 'edit'])->name('admin.jurusan.edit');
+        Route::put('jurusan/update', [JurusanController::class, 'update'])->name('admin.jurusan.update');
+        Route::delete('jurusan/delete', [JurusanController::class, 'delete'])->name('admin.jurusan.delete');
+        Route::post('jurusan/checkNama',[JurusanController::class, 'checkNama'])->name('admin.jurusan.checkNama');
+
+        //Anggota
+        Route::get('anggota', [AnggotaController::class, 'index'])->name('admin.anggota');
+        Route::get('anggota/add', [AnggotaController::class, 'add'])->name('admin.anggota.add');
+        Route::get('anggota/getData', [AnggotaController::class, 'getData'])->name('admin.anggota.getData');
+        Route::post('anggota/save', [AnggotaController::class, 'save'])->name('admin.anggota.save');
+        Route::get('anggota/edit/{id}', [AnggotaController::class, 'edit'])->name('admin.anggota.edit');
+        Route::put('anggota/update', [AnggotaController::class, 'update'])->name('admin.anggota.update');
+        Route::delete('anggota/delete', [AnggotaController::class, 'delete'])->name('admin.anggota.delete');
+        Route::get('anggota/getDetail-{id}', [AnggotaController::class, 'getDetail'])->name('admin.anggota.getDetail');
+        Route::post('anggota/checkTelepon',[AnggotaController::class, 'checkTelepon'])->name('admin.anggota.checkTelepon');
+        Route::post('anggota/checkEmail',[AnggotaController::class, 'checkEmail'])->name('admin.anggota.checkEmail');
+        Route::post('anggota/checkNis',[AnggotaController::class, 'checkNis'])->name('admin.anggota.checkNis');
+        Route::get('anggota/getEskul', [AnggotaController::class, 'getEskul'])->name('admin.anggota.getEskul');
+        Route::get('anggota/getKelas', [AnggotaController::class, 'getKelas'])->name('admin.anggota.getKelas');
+        Route::get('anggota/getJurusan', [AnggotaController::class, 'getJurusan'])->name('admin.anggota.getJurusan');
     });
 });
