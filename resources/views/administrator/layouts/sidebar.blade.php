@@ -17,13 +17,17 @@
             <li class="menu-header">Dashboard</li>
             <li class="{{ Route::is('admin.dashboard*') ? 'active' : '' }}"><a class="nav-link" href="blank.html"><i class="fas fa-columns"></i><span>Dashboard</span></a></li>
             <li class="menu-header">Menu</li>
-            <li class="dropdown {{ Route::is('admin.login*') ? 'active' : '' }}">
+            <li class="dropdown {{ Route::is('admin.jadwal*','admin.sekbid*','admin.kelas*','admin.jurusan*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i>
                     <span>Data Master</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('admin.login')}}">Default Layout</a></li>
+                    <li class="{{ Route::is('admin.jadwal*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.jadwal')}}">Jadwal</a></li>
+                    <li class="{{ Route::is('admin.sekbid*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.sekbid')}}">Sekbid</a></li>
+                    <li class="{{ Route::is('admin.kelas*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.kelas')}}">Kelas</a></li>
+                    <li class="{{ Route::is('admin.jurusan*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.jurusan')}}">Jurusan</a></li>
                 </ul>
             </li>
+            <li class="{{ Route::is('admin.eskul*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.eskul')}}"><i class="fas fa-solid fa-user"></i> <span>Ekstrakurikuler</span></a></li>
             <li class="dropdown {{ Route::is('admin.users*','admin.user_groups*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users-cog"></i>
                     <span>User Management</span></a>

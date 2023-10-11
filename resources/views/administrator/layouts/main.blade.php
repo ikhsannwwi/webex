@@ -19,19 +19,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <!-- CSS Libraries -->
-    {{-- <link rel="stylesheet" href="{{template_stisla('modules/jqvmap/dist/jqvmap.min.css')}}"> --}}
-    <link rel="stylesheet" href="{{ template_stisla('modules/weather-icon/css/weather-icons.min.css') }}">
-    <link rel="stylesheet" href="{{ template_stisla('modules/weather-icon/css/weather-icons-wind.min.css') }}">
-    <link rel="stylesheet" href="{{ template_stisla('modules/summernote/summernote-bs4.css') }}">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css">
     <!-- DataTables CSS -->
+    <link rel="stylesheet" href="{{ asset_administrator('assets/plugins/nice-select2/dist/css/nice-select2.css') }}">
     <link rel="stylesheet" href="{{ template_stisla('modules/datatables/datatables.min.css') }}">
     <link rel="stylesheet"
         href="{{ template_stisla('modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet"
         href="{{ template_stisla('modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
-
     <link rel="stylesheet" href="{{ template_stisla('modules/izitoast/css/iziToast.min.css') }}">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ template_stisla('css/style.css') }}">
@@ -87,19 +84,13 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
     {{-- <script src="{{template_stisla('modules/bootstrap/js/bootstrap.min.js')}}"></script> --}}
+
     <script src="{{ template_stisla('modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ template_stisla('modules/moment.min.js') }}"></script>
+
+    {{-- <script src="{{ template_stisla('modules/moment.min.js') }}"></script> --}}
     <script src="{{ template_stisla('js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
-    <script src="{{ template_stisla('modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
-    {{-- <script src="{{template_stisla('modules/chart.min.js')}}"></script> --}}
-    {{-- <script src="{{template_stisla('modules/jqvmap/dist/jquery.vmap.min.js')}}"></script> --}}
-    {{-- <script src="{{template_stisla('modules/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script> --}}
-    <script src="{{ template_stisla('modules/summernote/summernote-bs4.js') }}"></script>
-    <script src="{{ template_stisla('modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-
-    {{-- <script src="{{template_stisla('modules/sweetalert/sweetalert.min.js')}}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
@@ -110,15 +101,15 @@
     <script src="{{ template_stisla('modules/jquery-ui/jquery-ui.min.js') }}"></script>
 
     <script src="{{ asset_administrator('assets/plugins/form-jasnyupload/fileinput.min.js') }}"></script>
+    <script src="{{ asset_administrator('assets/plugins/nice-select2/dist/js/nice-select2.js') }}"></script>
 
     <script src="{{ template_stisla('modules/izitoast/js/iziToast.min.js') }}"></script>
     <!-- Template JS File -->
-    {{-- <script src="{{ template_stisla('js/page/index-0.js') }}"></script> --}}
     <script src="{{ template_stisla('js/scripts.js') }}"></script>
     <script src="{{ template_stisla('js/custom.js') }}"></script>
 
-  <script src="{{ template_stisla('js/page/modules-toastr.js') }}"></script>
-  <script>
+    <script src="{{ template_stisla('js/page/modules-toastr.js') }}"></script>
+    <script>
         var toastMessages = {
             errors: [],
             error: @json(session('error')),
