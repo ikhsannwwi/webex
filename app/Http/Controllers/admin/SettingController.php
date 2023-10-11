@@ -12,12 +12,12 @@ use Intervention\Image\Facades\Image;
 
 class SettingController extends Controller
 {
-    private static $module = "settings";
+    private static $module = "setting_general";
 
     public function index()
     {
         //Check permission
-        if (!isAllowed(static::$module, "setting")) {
+        if (!isAllowed(static::$module, "view")) {
             abort(403);
         }
         $settings = Setting::get()->toArray();
@@ -32,7 +32,7 @@ class SettingController extends Controller
     {
         // return $request;
         //Check permission
-        if (!isAllowed(static::$module, "setting")) {
+        if (!isAllowed(static::$module, "edit")) {
             abort(403);
         }
 
