@@ -40,6 +40,10 @@ class AnggotaController extends Controller
             });
         }
 
+        if (auth()->user()->eskul_id != 0) {
+            $data->where("eskul_id", auth()->user()->eskul_id);
+        }
+
         $data = $data->get();
 
         return DataTables::of($data)
@@ -215,7 +219,11 @@ class AnggotaController extends Controller
     }
 
     public function getEskul(){
-        $eskul = Eskul::all();
+        if (auth()->user()->eskul_id != 0) {
+            $eskul = Eskul::where("id", auth()->user()->eskul_id)->get();
+        } else {
+            $eskul = Eskul::all();
+        }
 
         return response()->json([
             'eskul' => $eskul,
