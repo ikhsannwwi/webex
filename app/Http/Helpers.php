@@ -19,6 +19,16 @@ function asset_eskul($url)
 	return asset('administrator/assets/media/eskul/' . $url);
 }
 
+function asset_dokumentasi($url)
+{
+	return asset('administrator/assets/media/dokumentasi/' . $url);
+}
+
+function asset_berita($url)
+{
+	return asset('administrator/assets/media/berita/' . $url);
+}
+
 function template_stisla($url)
 {
 	return asset('templateStisla/dist/assets/' . $url);
@@ -40,6 +50,12 @@ function upload_path($type = '', $file = '')
 			break;
 		case 'eskul':
 			$target_folder = 'eskul';
+			break;
+		case 'dokumentasi':
+			$target_folder = 'dokumentasi';
+			break;
+		case 'berita':
+			$target_folder = 'berita';
 			break;
 		default:
 			$target_folder = '';
@@ -65,6 +81,12 @@ function img_src($image = '', $img_type = '')
 				break;
 			case 'eskul':
 				$folder = '/eskul/';
+				break;
+			case 'dokumentasi':
+				$folder = '/dokumentasi/';
+				break;
+			case 'berita':
+				$folder = '/berita/';
 				break;
 			default:
 				$folder = '/';
