@@ -21,7 +21,7 @@
                         <h4>List Data</h4>
                     </div>
                     <div class="col-4" style="display: flex; justify-content: flex-end;">
-                        @if (isallowed('user', 'add'))
+                        @if (isallowed('eskul', 'add'))
                             <a href="{{ route('admin.eskul.add') }}" class="btn btn-primary">Tambah Data</a>
                         @endif
                         <a href="{{ route('admin.eskul') }}" class="btn btn-primary mx-3">Kembali</a>

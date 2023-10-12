@@ -38,6 +38,10 @@ class EskulController extends Controller
             });
         }
 
+        if (auth()->user()->eskul_id != 0) {
+            $data->where("id", auth()->user()->eskul_id);
+        }
+
         $data = $data->get();
 
         return DataTables::of($data)
@@ -219,6 +223,12 @@ class EskulController extends Controller
         ]);
 
         if ($request->hasFile('logo_url')) {
+            if (!empty($detail->logo_url)) {
+                $image_path = "./administrator/assets/media/eskul/" . $detail->logo_url;
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+            }
             // Jika ada file logo yang diunggah, simpan dan perbarui nama logo
             $fileName = 'logo_' . $data->nama . '_' . date('Y-m-d-H-i-s') . '_' . uniqid(2) . '.' . $logo->getClientOriginalExtension();
             $path = upload_path('eskul') . $fileName;
@@ -242,12 +252,6 @@ class EskulController extends Controller
         createLog(static::$module, __FUNCTION__, $data->id, ['Data sebelum diperbarui' => $previousData,'Data yang diperbarui' => ['Eskul' => $data, 'Eskul Detail' => $detail]]);
         return redirect()->route('admin.eskul')->with('success', 'Data berhasil diperbarui.');
     }
-
-
-
-
-    
-    
     
     public function delete(Request $request)
     {
@@ -368,6 +372,10 @@ class EskulController extends Controller
                     $query->where("sekbid_id", $request->sekbid);
                 }
             });
+        }
+
+        if (auth()->user()->eskul_id != 0) {
+            $data->where("id", auth()->user()->eskul_id);
         }
 
         $data = $data->get();
