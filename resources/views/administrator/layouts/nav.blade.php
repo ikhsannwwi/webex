@@ -67,24 +67,35 @@
         </li>
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="@if (auth()->user()->profile && auth()->user()->profile->foto) {{ img_src(auth()->user()->profile->foto, 'profile') }}
+                <img alt="image"
+                    src="@if (auth()->user()->profile && auth()->user()->profile->foto) {{ img_src(auth()->user()->profile->foto, 'profile') }}
                 @else
-                    {{ template_stisla('img/avatar/avatar-1.png') }} @endif" class="rounded-circle mr-1">
+                    {{ template_stisla('img/avatar/avatar-1.png') }} @endif"
+                    class="rounded-circle mr-1">
                 <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
             </a>
+            @php
+                $permissions = getPermissionModuleGroup();
+            @endphp
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="{{route('admin.profile',auth()->user()->kode)}}" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
-                </a>
-                <a href="{{route('admin.logSystems')}}" class="dropdown-item has-icon">
-                    <i class="fas fa-bolt"></i> Activities
-                </a>
-                <a href="{{route('admin.settings')}}" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
+                @if (showModule('profile', $permissions))
+                    <a href="{{ route('admin.profile', auth()->user()->kode) }}" class="dropdown-item has-icon">
+                        <i class="far fa-user"></i> Profile
+                    </a>
+                @endif
+                @if (showModule('log-system', $permissions))
+                    <a href="{{ route('admin.logSystems') }}" class="dropdown-item has-icon">
+                        <i class="fas fa-bolt"></i> Activities
+                    </a>
+                @endif
+                @if (showModule('setting', $permissions))
+                    <a href="{{ route('admin.settings') }}" class="dropdown-item has-icon">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                @endif
                 <div class="dropdown-divider"></div>
-                <a href="{{route('admin.logout')}}" class="dropdown-item has-icon text-danger">
+                <a href="{{ route('admin.logout') }}" class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
