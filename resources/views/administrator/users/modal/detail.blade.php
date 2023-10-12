@@ -39,6 +39,7 @@
                 success: function(response) {
                     var data = response.data;
 
+                    // console.log(data);
                     // Assuming data.user_group is an object, you can check if it exists before rendering it.
                     var userGroupHtml = data.user_group ? data.user_group.name : '';
 
@@ -99,6 +100,15 @@
                         '</div>' +
                         '<div class="col-7">' +
                         '<div class="data">: ' + data.email + '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        
+                        '<div class="row">' +
+                        '<div class="col-5">' +
+                        '<div class="title">Akses Ekstrakurikuler</div>' +
+                        '</div>' +
+                        '<div class="col-7">' +
+                        '<div class="data">: ' + (data.eskul_id != 0 ? data.eskul.nama : 'Admin')  + '</div>' +
                         '</div>' +
                         '</div>' +
 

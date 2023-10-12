@@ -2,13 +2,14 @@
 
 namespace App\Models\admin;
 
+use App\Models\admin\Eskul;
 use App\Models\admin\UserGroup;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'status',
         'user_group_id',
         'kode',
+        'eskul_id',
     ];
 
     /**
@@ -58,4 +60,7 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class, 'user_kode', 'kode');
     }
     
+    public function eskul(){
+        return $this->belongsTo(Eskul::class, 'eskul_id');
+    }
 }

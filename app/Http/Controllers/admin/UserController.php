@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use DataTables;
 use App\Models\admin\User;
+use App\Models\admin\Eskul;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\admin\Profile;
@@ -109,6 +110,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'konfirmasi_password' => 'required|min:8|same:password',
             'user_group' => 'required',
+            'eskul' => 'required',
             'status' => 'required',
         ]);
     
@@ -117,6 +119,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'user_group_id' => $request->user_group,
+            'eskul_id' => $request->eskul,
             'status' => $request->status,
             'kode' => $request->kode,
             'remember_token' => Str::random(60),
@@ -162,6 +165,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$id,
             'user_group' => 'required',
+            'eskul' => 'required',
             'kode' => 'required|unique:users,kode,'.$id,
         ];
 
@@ -179,6 +183,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'user_group_id' => $request->user_group,
+            'eskul_id' => $request->eskul,
             'status' => $request->status,
             'kode' => $request->kode,
             'remember_token' => Str::random(60),
@@ -261,7 +266,7 @@ class UserController extends Controller
             abort(403);
         }
 
-        $data = User::with('user_group')->with('profile')->find($id);
+        $data = User::with('user_group')->with('eskul')->with('profile')->find($id);
 
         return response()->json([
             'data' => $data,
@@ -298,6 +303,14 @@ class UserController extends Controller
 
         return response()->json([
             'usergroup' => $usergroup,
+        ]);
+    }
+    
+    public function getEskul(){
+        $eskul = Eskul::all();
+
+        return response()->json([
+            'eskul' => $eskul,
         ]);
     }
     

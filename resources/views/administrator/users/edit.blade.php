@@ -25,7 +25,18 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group mandatory">
                                 <label for="userGroupField" class="form-label">User Group</label>
-                                <select class="form-control" name="user_group" id="userGroupField"
+                                <select class="wide mb-3" name="user_group" id="userGroupField"
+                                    data-parsley-required="true">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group mandatory">
+                                <label for="EskulField" class="form-label">Ekstrakurikuler</label>
+                                <select class="wide mb-3" name="eskul" id="EskulField"
                                     data-parsley-required="true">
 
                                 </select>
@@ -471,12 +482,64 @@
                     } else {
                         optionUserGroup.prepend('<option value="" selected>Pilih Data</option>');
                     }
-                    optionUserGroup.update();
+                    selectuserGroupField.update();
                 },
                 error: function() {
                     // Handle the error case if the AJAX request fails
                     console.error('Gagal memuat data User Group.');
                     optionUserGroup.html('<option>Gagal memuat data</option>')
+                    loadingSpinner
+                        .hide(); // Hide the loading spinner even if there's an error
+                }
+            });
+            
+            var optionEskul = $('#EskulField');
+            var selectEskulField = NiceSelect.bind(document.getElementById("EskulField"), options);
+
+
+            optionEskul.html(
+                '<option id="loadingSpinner" style="display: none;">' +
+                '<i class="fas fa-spinner fa-spin">' +
+                '</i> Sedang memuat...</option>'
+            );
+
+            var loadingSpinner = $('#loadingSpinner');
+
+            loadingSpinner.show(); // Tampilkan elemen animasi
+
+            $.ajax({
+                url: '{{ route('admin.users.getEskul') }}',
+                method: 'GET',
+                success: function(response) {
+                    var data = response.eskul;
+                    var optionsHtml = ''; // Store the generated option elements
+
+                    // Iterate through each user group in the response data
+                    for (var i = 0; i < data.length; i++) {
+                        var eskul = data[i];
+                        optionsHtml += '<option value="' + eskul.id + '">' + eskul
+                            .nama + '</option>';
+                    }
+
+                    // Construct the final dropdown HTML
+                    var finalDropdownHtml = optionsHtml;
+
+                    optionEskul.html(finalDropdownHtml);
+
+                    loadingSpinner.hide(); // Hide the loading spinner after data is loaded
+
+                    // Set the selected option based on the value of $data->id
+                    if ('{{ $data->eskul }}') {
+                        optionEskul.val('{{ $data->eskul->id ?? '' }}');
+                    } else {
+                        optionEskul.prepend('<option value="0" selected>Admin</option>');
+                    }
+                    selectEskulField.update();
+                },
+                error: function() {
+                    // Handle the error case if the AJAX request fails
+                    console.error('Gagal memuat data User Group.');
+                    optionEskul.html('<option>Gagal memuat data</option>')
                     loadingSpinner
                         .hide(); // Hide the loading spinner even if there's an error
                 }
