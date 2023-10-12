@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\viewController;
 use App\Http\Controllers\admin\EskulController;
 use App\Http\Controllers\admin\KelasController;
+use App\Http\Controllers\admin\BeritaController;
 use App\Http\Controllers\admin\JadwalController;
 use App\Http\Controllers\admin\ModuleController;
 use App\Http\Controllers\admin\SekbidController;
@@ -16,6 +17,10 @@ use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\LogSystemController;
 use App\Http\Controllers\admin\UserGroupController;
+use App\Http\Controllers\admin\DokumentasiController;
+use App\Http\Controllers\admin\PendaftaranController;
+use App\Http\Controllers\admin\KepalaSekolahController;
+use App\Http\Controllers\admin\WakilKepalaSekolahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +77,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('users/delete', [UserController::class, 'delete'])->name('admin.users.delete');
         Route::get('users/getDetail-{id}', [UserController::class, 'getDetail'])->name('admin.users.getDetail');
         Route::get('users/getUserGroup', [UserController::class, 'getUserGroup'])->name('admin.users.getUserGroup');
+        Route::get('users/getEskul', [UserController::class, 'getEskul'])->name('admin.users.getEskul');
         Route::post('users/changeStatus',[UserController::class, 'changeStatus'])->name('admin.users.changeStatus');
         Route::get('users/generateKode',[UserController::class, 'generateKode'])->name('admin.users.generateKode');
         Route::post('users/checkEmail',[UserController::class, 'checkEmail'])->name('admin.users.checkEmail');
@@ -179,5 +185,53 @@ Route::prefix('admin')->group(function () {
         Route::get('anggota/getEskul', [AnggotaController::class, 'getEskul'])->name('admin.anggota.getEskul');
         Route::get('anggota/getKelas', [AnggotaController::class, 'getKelas'])->name('admin.anggota.getKelas');
         Route::get('anggota/getJurusan', [AnggotaController::class, 'getJurusan'])->name('admin.anggota.getJurusan');
+
+        //Pendaftaran
+        Route::get('pendaftaran', [PendaftaranController::class, 'index'])->name('admin.pendaftaran');
+        Route::get('pendaftaran/add', [PendaftaranController::class, 'add'])->name('admin.pendaftaran.add');
+        Route::get('pendaftaran/getData', [PendaftaranController::class, 'getData'])->name('admin.pendaftaran.getData');
+        Route::post('pendaftaran/save', [PendaftaranController::class, 'save'])->name('admin.pendaftaran.save');
+        Route::get('pendaftaran/edit/{id}', [PendaftaranController::class, 'edit'])->name('admin.pendaftaran.edit');
+        Route::put('pendaftaran/update', [PendaftaranController::class, 'update'])->name('admin.pendaftaran.update');
+        Route::delete('pendaftaran/delete', [PendaftaranController::class, 'delete'])->name('admin.pendaftaran.delete');
+        Route::get('pendaftaran/getDetail-{id}', [PendaftaranController::class, 'getDetail'])->name('admin.pendaftaran.getDetail');
+        Route::post('pendaftaran/checkTelepon',[PendaftaranController::class, 'checkTelepon'])->name('admin.pendaftaran.checkTelepon');
+        Route::post('pendaftaran/checkEmail',[PendaftaranController::class, 'checkEmail'])->name('admin.pendaftaran.checkEmail');
+        Route::post('pendaftaran/checkNis',[PendaftaranController::class, 'checkNis'])->name('admin.pendaftaran.checkNis');
+        Route::get('pendaftaran/getEskul', [PendaftaranController::class, 'getEskul'])->name('admin.pendaftaran.getEskul');
+        Route::get('pendaftaran/getKelas', [PendaftaranController::class, 'getKelas'])->name('admin.pendaftaran.getKelas');
+        Route::get('pendaftaran/getJurusan', [PendaftaranController::class, 'getJurusan'])->name('admin.pendaftaran.getJurusan');
+        Route::post('pendaftaran/accept', [PendaftaranController::class, 'accept'])->name('admin.pendaftaran.accept');
+        Route::delete('pendaftaran/reject', [PendaftaranController::class, 'reject'])->name('admin.pendaftaran.reject');
+
+        //Dokumentasi
+        Route::get('dokumentasi', [DokumentasiController::class, 'index'])->name('admin.dokumentasi');
+        Route::get('dokumentasi/add', [DokumentasiController::class, 'add'])->name('admin.dokumentasi.add');
+        Route::get('dokumentasi/getData', [DokumentasiController::class, 'getData'])->name('admin.dokumentasi.getData');
+        Route::post('dokumentasi/save', [DokumentasiController::class, 'save'])->name('admin.dokumentasi.save');
+        Route::get('dokumentasi/edit/{id}', [DokumentasiController::class, 'edit'])->name('admin.dokumentasi.edit');
+        Route::put('dokumentasi/update', [DokumentasiController::class, 'update'])->name('admin.dokumentasi.update');
+        Route::delete('dokumentasi/delete', [DokumentasiController::class, 'delete'])->name('admin.dokumentasi.delete');
+        Route::get('dokumentasi/getDetail-{id}', [DokumentasiController::class, 'getDetail'])->name('admin.dokumentasi.getDetail');
+        Route::get('dokumentasi/getEskul', [DokumentasiController::class, 'getEskul'])->name('admin.dokumentasi.getEskul');
+
+        //Berita
+        Route::get('berita', [BeritaController::class, 'index'])->name('admin.berita');
+        Route::get('berita/add', [BeritaController::class, 'add'])->name('admin.berita.add');
+        Route::get('berita/getData', [BeritaController::class, 'getData'])->name('admin.berita.getData');
+        Route::post('berita/save', [BeritaController::class, 'save'])->name('admin.berita.save');
+        Route::get('berita/edit/{id}', [BeritaController::class, 'edit'])->name('admin.berita.edit');
+        Route::put('berita/update', [BeritaController::class, 'update'])->name('admin.berita.update');
+        Route::delete('berita/delete', [BeritaController::class, 'delete'])->name('admin.berita.delete');
+        Route::get('berita/getDetail-{id}', [BeritaController::class, 'getDetail'])->name('admin.berita.getDetail');
+        Route::get('berita/getEskul', [BeritaController::class, 'getEskul'])->name('admin.berita.getEskul');
+
+        //Setting Page Kepala Sekolah
+        Route::get('kepala-sekolah', [KepalaSekolahController::class, 'index'])->name('admin.kepala_sekolah');
+        Route::put('kepala-sekolah/update', [KepalaSekolahController::class, 'update'])->name('admin.kepala_sekolah.update');
+
+        //Setting Page Wakil Kepala Sekolah
+        Route::get('wakil-kepala-sekolah', [WakilKepalaSekolahController::class, 'index'])->name('admin.wakil_kepala_sekolah');
+        Route::put('wakil-kepala-sekolah/update', [WakilKepalaSekolahController::class, 'update'])->name('admin.wakil_kepala_sekolah.update');
     });
 });
