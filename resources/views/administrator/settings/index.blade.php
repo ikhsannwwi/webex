@@ -172,7 +172,7 @@
 
                 // Validate the form using Parsley
                 if ($(form).parsley().validate()) {
-                    indicatorNone();
+                    indicatorSubmit();
 
                     // Submit the form
                     form.submit();
