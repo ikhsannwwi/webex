@@ -8,8 +8,10 @@ use App\Models\admin\Kelas;
 use Illuminate\Http\Request;
 use App\Models\admin\Anggota;
 use App\Models\admin\Jurusan;
+use App\Mail\StatusPendaftarMail;
 use App\Models\admin\Pendaftaran;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class PendaftaranController extends Controller
 {
@@ -100,9 +102,9 @@ class PendaftaranController extends Controller
             'nama' => 'required',
             'kelas' => 'required',
             'jurusan' => 'required',
-            'nis' => 'required|unique:pendaftaran,nis',
-            'telepon' => 'required|unique:pendaftaran,telepon',
-            'email' => 'required|unique:pendaftaran,email',
+            'nis' => 'required',
+            'telepon' => 'required',
+            'email' => 'required',
             'eskul' => 'required',
             'alasan_masuk' => 'required',
         ]);
@@ -148,9 +150,9 @@ class PendaftaranController extends Controller
             'nama' => 'required',
             'kelas' => 'required',
             'jurusan' => 'required',
-            'nis' => 'required|unique:pendaftaran,nis,' . $id,
-            'telepon' => 'required|unique:pendaftaran,telepon,' . $id,
-            'email' => 'required|unique:pendaftaran,email,' . $id,
+            'nis' => 'required',
+            'telepon' => 'required',
+            'email' => 'required',
             'eskul' => 'required',
             'alasan_masuk' => 'required',
         ]);
@@ -358,10 +360,55 @@ class PendaftaranController extends Controller
 
         $id = $request->id;
 
-        $pendaftaran = Pendaftaran::where('id',$id)->firstOrFail();
-        $anggota = Anggota::where('email',$pendaftaran->email)->orWhere('telepon', $pendaftaran->telepon)->orWhere('nis', $pendaftaran->nis)->firstOrFail();
+        $pendaftaran = Pendaftaran::where('id',$id)->with('eskul')->first();
+        $anggota = Anggota::where('email', $pendaftaran->email)
+            ->orWhere('telepon', $pendaftaran->telepon)
+            ->orWhere('nis', $pendaftaran->nis)
+            ->first(); // Menggunakan first() daripada firstOrFail()
+            // dd($anggota);
+        if (!empty($anggota)) {
+            if ($pendaftaran->eskul_id != $anggota->eskul_id) {
+                # code...
+                $data = Anggota::create([
+                    'nama' => $pendaftaran->nama,
+                    'kelas_id' => $pendaftaran->kelas_id,
+                    'jurusan_id' => $pendaftaran->jurusan_id,
+                    'nis' => $pendaftaran->nis,
+                    'telepon' => $pendaftaran->telepon, 
+                    'email' => $pendaftaran->email,
+                    'eskul_id' => $pendaftaran->eskul_id,
+                ]);
+            
+                $pendaftaran->delete();
+                
+                $mailData = [
+                'title' => 'Selamat '. $pendaftaran->nama,
+                'content' => 'Anda telah diterima di Ekstrakurikuler '. $pendaftaran->eskul->nama .'.',
+                'nama' => $pendaftaran->nama,
+                'nis' => $pendaftaran->nis,
+                'kelas' => $pendaftaran->kelas->kode,
+                'jurusan' => $pendaftaran->jurusan->nama,
+                'email' => $pendaftaran->email,
+                'telepon' => $pendaftaran->telepon,
+                'alasan_masuk' => $pendaftaran->alasan_masuk,
+                'status' => 'accept',
+            ];
+    
+            $recipientEmail = $pendaftaran->email;
+    
+            Mail::to($recipientEmail)->send(new StatusPendaftarMail($mailData));
 
-        if ($anggota->eskul_id != $pendaftaran->eskul_id) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Data telah pindahkan.',
+                ]);
+            }else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Sudah ada di Anggota 1'
+                ], 400);
+            }
+        } elseif (empty($anggota)) {
             $data = Anggota::create([
                 'nama' => $pendaftaran->nama,
                 'kelas_id' => $pendaftaran->kelas_id,
@@ -373,7 +420,24 @@ class PendaftaranController extends Controller
             ]);
         
             $pendaftaran->delete();
+            
+            $mailData = [
+                'title' => 'Selamat '. $pendaftaran->nama,
+                'content' => 'Anda telah diterima di Ekstrakurikuler '. $pendaftaran->eskul->nama .'.',
+                'nama' => $pendaftaran->nama,
+                'nis' => $pendaftaran->nis,
+                'kelas' => $pendaftaran->kelas->kode,
+                'jurusan' => $pendaftaran->jurusan->nama,
+                'email' => $pendaftaran->email,
+                'telepon' => $pendaftaran->telepon,
+                'alasan_masuk' => $pendaftaran->alasan_masuk,
+                'status' => 'accept',
+            ];
     
+            $recipientEmail = $pendaftaran->email;
+    
+            Mail::to($recipientEmail)->send(new StatusPendaftarMail($mailData));
+            
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data telah pindahkan.',
@@ -381,9 +445,10 @@ class PendaftaranController extends Controller
         } else{
             return response()->json([
                 'status' => 'error',
-                'message' => 'Sudah ada di Anggota'
+                'message' => 'Sudah ada di Anggota 2'
             ], 400);
         }
+
         
     }
 
@@ -407,8 +472,24 @@ class PendaftaranController extends Controller
         // Delete the data.
         $data->delete();
 
+        $mailData = [
+            'title' => 'Jangan menyerah ya ' . $data->nama,
+            'content' => 'Anda tidak diterima di Ekstrakurikuler '. $data->eskul->nama .'.',
+            'nama' => $data->nama,
+            'nis' => $data->nis,
+            'kelas' => $data->kelas->kode,
+            'jurusan' => $data->jurusan->nama,
+            'email' => $data->email,
+            'telepon' => $data->telepon,
+            'alasan_masuk' => $data->alasan_masuk,
+            'status' => 'reject',
+        ];
+
+        $recipientEmail = $data->email;
+
+        Mail::to($recipientEmail)->send(new StatusPendaftarMail($mailData));
+
         // Write logs only for soft delete (not force delete)
-        createLog(static::$module, __FUNCTION__, $id, ['Data yang dihapus' => $deletedData]);
 
         return response()->json([
             'status' => 'success',

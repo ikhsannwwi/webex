@@ -123,6 +123,7 @@
             @if (showModule('setting', $permissions) ||
                     showModule('setting_kepala_sekolah', $permissions) ||
                     showModule('setting_wakil_kepala_sekolah', $permissions) ||
+                    showModule('setting_pendaftaran', $permissions) ||
                     showModule('module_management', $permissions))
                 <li
                     class="dropdown {{ Route::is('admin.settings*', 'admin.module*', 'admin.kepala_sekolah*', 'admin.wakil_kepala_sekolah*') ? 'active' : '' }}">
@@ -141,6 +142,11 @@
                             <li class="{{ Route::is('admin.wakil_kepala_sekolah*') ? 'active' : '' }}"><a
                                     class="nav-link" href="{{ route('admin.wakil_kepala_sekolah') }}">Setting
                                     WaKaSek</a></li>
+                        @endif
+                        @if (showModule('setting_pendaftaran', $permissions))
+                            <li class="{{ Route::is('admin.settingPendaftaran*') ? 'active' : '' }}"><a
+                                    class="nav-link" href="{{ route('admin.settingPendaftaran') }}">Setting
+                                    Pendaftaran</a></li>
                         @endif
                         @if (showModule('module_management', $permissions))
                             <li class="{{ Route::is('admin.module*') ? 'active' : '' }}"><a class="nav-link"

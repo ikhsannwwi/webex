@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-4" style="display: flex; justify-content: flex-end;">
                         <a href="javascript:void(0)" class="btn btn-primary" id="filterButton" style="text-align: center;">Filter</a>
-                        @if (isallowed('user', 'add'))
+                        @if (isallowed('user_group', 'add'))
                             <a href="{{ route('admin.user_groups.add') }}" class="btn btn-primary mx-3" style="text-align: center;">Tambah Data</a>
                         @endif
                     </div>

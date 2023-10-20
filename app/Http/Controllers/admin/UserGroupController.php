@@ -86,7 +86,10 @@ class UserGroupController extends Controller
             abort(403);
         }
 
-        $modules = Module::with("access")->get();
+        $modules = auth() && auth()->user()->eskul_id == 0 
+        ? Module::with("access")->get() 
+        : Module::where('identifiers', '!=', 'module_management')->with("access")->get();
+
         return view("administrator.user_groups.add", compact("modules"));
         // return view("administrator.user_groups.examplee.add", compact("modules"));
     }
@@ -160,7 +163,9 @@ class UserGroupController extends Controller
         if (!$edit) {
             return abort(404);
         }
-        $modules = Module::with("access")->get();
+        $modules = auth() && auth()->user()->eskul_id == 0 
+        ? Module::with("access")->get() 
+        : Module::where('identifiers', '!=', 'module_management')->with("access")->get();
         $permission = getPermissionGroup($id);
         return view("administrator.user_groups.edit", compact("edit", "modules", "permission"));
     }

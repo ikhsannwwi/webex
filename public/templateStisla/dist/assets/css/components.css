@@ -287,6 +287,9 @@
 .browser.browser-safari {
   background-image: url("../img/browsers/safari.png");
 }
+.browser.browser-edge {
+  background-image: url("../img/browsers/edge.png");
+}
 
 /* 1.5 Chat */
 .chat-box .chat-content {

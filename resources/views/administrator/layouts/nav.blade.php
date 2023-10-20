@@ -68,11 +68,11 @@
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image"
-                    src="@if (auth()->user()->profile && auth()->user()->profile->foto) {{ img_src(auth()->user()->profile->foto, 'profile') }}
+                    src="@if (auth()->user() ? auth()->user()->profile && auth()->user()->profile->foto : '') {{ img_src(auth()->user()->profile->foto, 'profile') }}
                 @else
                     {{ template_stisla('img/avatar/avatar-1.png') }} @endif"
                     class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
+                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user() ? auth()->user()->name : '' }}</div>
             </a>
             @php
                 $permissions = getPermissionModuleGroup();
@@ -80,7 +80,7 @@
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">Logged in 5 min ago</div>
                 @if (showModule('profile', $permissions))
-                    <a href="{{ route('admin.profile', auth()->user()->kode) }}" class="dropdown-item has-icon">
+                    <a href="{{ route('admin.profile', auth()->user() ? auth()->user()->kode : '') }}" class="dropdown-item has-icon">
                         <i class="far fa-user"></i> Profile
                     </a>
                 @endif

@@ -2,7 +2,7 @@
 
 @section('content')
     @push('section_header')
-        <h1>settings</h1>
+        <h1>Settings</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item active"><a href="{{ route('admin.settings') }}">Settings</a></div>

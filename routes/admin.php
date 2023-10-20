@@ -20,6 +20,7 @@ use App\Http\Controllers\admin\UserGroupController;
 use App\Http\Controllers\admin\DokumentasiController;
 use App\Http\Controllers\admin\PendaftaranController;
 use App\Http\Controllers\admin\KepalaSekolahController;
+use App\Http\Controllers\admin\SettingPendaftaranController;
 use App\Http\Controllers\admin\WakilKepalaSekolahController;
 
 /*
@@ -35,7 +36,6 @@ use App\Http\Controllers\admin\WakilKepalaSekolahController;
 
 // ------------------------------------------  Admin -----------------------------------------------------------------
 Route::prefix('admin')->group(function () {
-    Route::get('login', [AuthController::class, 'login'])->name('admin.login');
     Route::post('login/checkEmail', [AuthController::class, 'checkEmail'])->name('admin.login.checkEmail');
     Route::post('login/checkPassword', [AuthController::class, 'checkPassword'])->name('admin.login.checkPassword');
     Route::post('loginProses', [AuthController::class, 'loginProses'])->name('admin.loginProses');
@@ -44,7 +44,9 @@ Route::prefix('admin')->group(function () {
     Route::get('main-admin', [viewController::class, 'main_admin'])->name('main_admin');
 
     Route::middleware(['auth.admin'])->group(function () {
+    Route::get('login', [AuthController::class, 'login'])->name('admin.login');
         Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('dashboard/getPendaftaran', [DashboardController::class, 'getPendaftaran'])->name('admin.dashboard.getPendaftaran');
 
         //Log Systems
         Route::get('log-systems', [LogSystemController::class, 'index'])->name('admin.logSystems');
@@ -233,5 +235,9 @@ Route::prefix('admin')->group(function () {
         //Setting Page Wakil Kepala Sekolah
         Route::get('wakil-kepala-sekolah', [WakilKepalaSekolahController::class, 'index'])->name('admin.wakil_kepala_sekolah');
         Route::put('wakil-kepala-sekolah/update', [WakilKepalaSekolahController::class, 'update'])->name('admin.wakil_kepala_sekolah.update');
+
+        //Setting Status Pendaftaran
+        Route::get('setting-pendaftaran', [SettingPendaftaranController::class, 'index'])->name('admin.settingPendaftaran');
+        Route::put('setting-pendaftaran/update', [SettingPendaftaranController::class, 'update'])->name('admin.settingPendaftaran.update');
     });
 });

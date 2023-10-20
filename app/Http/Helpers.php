@@ -236,6 +236,7 @@ function getPermissionGroup2($x)
 
 function getPermissionModuleGroup()
 {
+	if (auth()->user()) {
 	$data_user = User::find(auth()->user()->id);
 	$grup_pengguna_id = $data_user->user_group_id;
 	$data_akses = ModuleAccess::select(DB::raw('
@@ -269,8 +270,11 @@ function getPermissionModuleGroup()
 	return $permission;
 }
 
+}
+
 function showModule($module, $permission_module)
 {
+	if (auth()->user()) {
 	$data_user = User::find(auth()->user()->id);
 	$grup_pengguna_id = $data_user->user_group_id;
 	if ($grup_pengguna_id == 0) {
@@ -282,4 +286,5 @@ function showModule($module, $permission_module)
 			return FALSE;
 		}
 	}
+}
 }
