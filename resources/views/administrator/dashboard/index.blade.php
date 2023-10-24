@@ -128,6 +128,7 @@
                 </div>
             </div>
         </div>
+        @if (isallowed('module_management', 'view'))
         <div class="col-lg-4 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
@@ -145,6 +146,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
     </section>
 @endsection

@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
             'status' => 1,
             'user_group_id' => 0,
             'remember_token' => Str::random(60),
+            'eskul_id' => 0,
         ]);
     }
 }

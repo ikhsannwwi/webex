@@ -14,7 +14,7 @@ class DropColumnSekbidIdAtSekbidTable extends Migration
     public function up()
     {
         Schema::table('sekbid', function (Blueprint $table) {
-            $table->dropColumn('sekbid_id');
+            // $table->dropColumn('sekbid_id');
         });
     }
 
@@ -26,7 +26,7 @@ class DropColumnSekbidIdAtSekbidTable extends Migration
     public function down()
     {
         Schema::table('sekbid', function (Blueprint $table) {
-            $table->dropColumn('sekbid_id');
+            // $table->dropColumn('sekbid_id');
         });
     }
 }

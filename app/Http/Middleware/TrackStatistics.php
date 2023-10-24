@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
+use App\Models\admin\Statistic;
 
 class TrackStatistics
 {
@@ -16,15 +18,22 @@ class TrackStatistics
      */
     public function handle(Request $request, Closure $next)
     {
-        $statistics = new \App\Models\Admin\Statistic;
-        $statistics->ip_address = $request->ip();
+        $url = request()->url();
+        // dd(str_contains($url, '/admin'));
 
-        $agent = new \Jenssegers\Agent\Agent;
-        $statistics->device = $agent->device();
-        $statistics->platform = $agent->platform();
-        $statistics->browser = $agent->browser();
-        $statistics->visit_time = now();
-        $statistics->save();
+        if (str_contains($url, '/admin')) {
+            return $next($request);
+        }else {
+            $statistics = new Statistic();
+            $statistics->ip_address = $request->ip();
+
+            $agent = new Agent();
+            $statistics->device = $agent->device();
+            $statistics->platform = $agent->platform();
+            $statistics->browser = $agent->browser();
+            $statistics->visit_time = now();
+            $statistics->save();
+        }
 
         return $next($request);
     }

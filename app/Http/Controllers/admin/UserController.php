@@ -420,7 +420,7 @@ class UserController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $btn = "";
-                if (isAllowed(static::$module, "delete")) : //Check permission
+                if (isAllowed(static::$module, "force_delete")) : //Check permission
                     $btn .= '<a href="#" data-id="' . $row->id . '" class="btn btn-danger btn-sm delete  ">
                     Delete
                 </a>';
@@ -489,7 +489,7 @@ class UserController extends Controller
     public function forceDelete(Request $request)
     {
         //Check permission
-        if (!isAllowed(static::$module, "delete")) {
+        if (!isAllowed(static::$module, "force_delete")) {
             abort(403);
         }
         
