@@ -4,23 +4,23 @@
 @php
     use Illuminate\Support\Str;
 @endphp
-    <section data-anim-wrap class="masthead -type-3 bg-light-6 js-mouse-move-container">
+    <section  class="masthead -type-3 bg-light-6 js-mouse-move-container">
         <div class="container">
             <div class="row y-gap-30 items-center justify-center">
                 <div class="col-xl-7 col-lg-11 relative z-5">
                     <div class="masthead__content pl-32 lg:pl-0">
-                        <h1 data-anim-child="slide-up delay-1" class="masthead__title">
+                        <h1  class="masthead__title">
                             Temukan <span class="text-purple-1">Ekstrakulikuler</span> <br>yang ada di <br> SMKN 1 Garut
                         </h1>
 
-                        <p data-anim-child="slide-up delay-2" class="masthead__text text-17 text-dark-1 mt-25">
+                        <p  class="masthead__text text-17 text-dark-1 mt-25">
                             Webex merupakan web yang berfungsi sebagai media<br class="lg:d-none">
                             untuk mengakses ekstrakulikuler yang ada di SMKN 1 Garut.
                         </p>
                     </div>
                 </div>
 
-                <div data-anim-child="slide-up delay-5" class="col-xl-5 col-lg-7 relative z-2">
+                <div class="col-xl-5 col-lg-7 relative z-2">
                     <div class="masthead-image">
                         <div class="masthead-image__img1">
                             <div class="masthead-image__shape xl:d-none">
