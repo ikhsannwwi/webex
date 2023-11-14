@@ -24,12 +24,31 @@ class ProfileController extends Controller
         $data = Profile::with('user')
         ->where('user_kode',$kode)
         ->first();
-        $sosmed = json_decode($data->sosial_media, true); // Mengubah JSON menjadi array
-        // dd($sosmed);
-        // Jika data tidak ditemukan, tampilkan pesan kesalahan atau arahkan ke halaman lain
         if (!$data) {
-            return redirect()->route('admin.dashboard')->with('error', 'Data pengguna tidak ditemukan.');
+            # code...
+
+            $sosmedData = [
+                'linkedin' => '',
+                'twitter' => '',
+                'instagram' => '',
+                'facebook' => '',
+            ];
+            $sosmedJson = json_encode($sosmedData);
+            $profile = Profile::create([
+                'user_kode' => auth()->user() ? auth()->user()->kode : '',
+                'sosial_media' => $sosmedJson,
+            ]);
+
+            $profile->save();
+            $sosmed = json_decode($sosmedJson, true); // Mengubah JSON menjadi array
+        }else{
+            $sosmed = json_decode($data->sosial_media, true); // Mengubah JSON menjadi array
         }
+        // // dd($sosmed);
+        // // Jika data tidak ditemukan, tampilkan pesan kesalahan atau arahkan ke halaman lain
+        // if (!$data) {
+        //     return redirect()->route('admin.dashboard')->with('error', 'Data pengguna tidak ditemukan.');
+        // }
     
         return view('administrator.profile.index', compact('data','sosmed'));
     }
