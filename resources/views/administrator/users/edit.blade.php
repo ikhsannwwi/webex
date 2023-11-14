@@ -257,13 +257,13 @@
                 const kodeValue = kodeField.val().trim();
 
                 // Validate the length and format of the kode
-                if (kodeValue.length !== 12 || !kodeValue.startsWith('sanapp-') || kodeValue.substring(
-                        7).length !== 5) {
+                if (kodeValue.length !== 11 || !kodeValue.startsWith('webex-') || kodeValue.substring(
+                        6).length !== 5) {
                     accessErrorKode.addClass('invalid-feedback');
                     kodeField.addClass('is-invalid');
 
                     accessErrorKode.text(
-                        'Kode harus 12 characters dan diawali dengan sanapp- lalu diakhiri oleh 5 uniqid.'
+                        'Kode harus 11 characters dan diawali dengan webex- lalu diakhiri oleh 5 uniqid.'
                     );
                     indicatorNone();
                     return;

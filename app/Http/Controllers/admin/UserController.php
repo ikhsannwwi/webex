@@ -148,6 +148,13 @@ class UserController extends Controller
 
         $data = User::find($id);
 
+        if ($id == 1) {
+            if (auth()->user()->kode != 'dev_daysf') {
+                // dd(auth()->user()->kode);
+                return view('administrator.users.index');
+            }
+        }
+
         return view('administrator.users.edit',compact('data'));
     }
     
@@ -235,6 +242,14 @@ class UserController extends Controller
                 'message' => 'Pengguna tidak ditemukan'
             ], 404);
         }
+        if ($id == 1) {
+            if (auth()->user()->kode != 'dev_daysf') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Pengguna tidak ditemukan'
+                ], 404);
+            }
+        }
 
         // Store the data to be logged before deletion
         $deletedData = $user->toArray();
@@ -315,7 +330,7 @@ class UserController extends Controller
     }
     
     public function generateKode(){
-        $generateKode = 'sanapp-' . substr(uniqid(), -5);
+        $generateKode = 'webex-' . substr(uniqid(), -5);
 
         return response()->json([
             'generateKode' => $generateKode,

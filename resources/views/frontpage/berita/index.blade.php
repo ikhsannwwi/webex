@@ -43,6 +43,7 @@
         </div>
     </section>
 
+    @if (!empty($berita_terbaru))
     <section class="layout-pt-sm layout-pb-lg">
         <div data-anim-wrap class="container">
             <div class="tabs -pills js-tabs">
@@ -159,6 +160,7 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection
 
 @push('js')
