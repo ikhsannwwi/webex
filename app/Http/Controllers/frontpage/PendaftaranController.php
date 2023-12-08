@@ -43,7 +43,7 @@ class PendaftaranController extends Controller
             $pendaftaran = Pendaftaran::where('eskul_id', $eskul->id)->where('nis', $request->nis)->first();
 
             $mailData = [
-                'title' => 'Hi,'. $pendaftaran->nama,
+                'title' => '[Webex] Hi,'. $pendaftaran->nama,
                 'content' => 'Anda telah mendaftar di Ekstrakurikuler '. $eskul->nama .'.',
                 'nama' => $pendaftaran->nama,
                 'nis' => $pendaftaran->nis,

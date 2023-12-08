@@ -28,6 +28,7 @@
                                 <input class="tgl tgl-ios" type="checkbox" value="aktif" id="inputStatus"
                                 name="status_pendaftaran"{{ array_key_exists('status_pendaftaran', $settings) ? ($settings['status_pendaftaran'] == 'aktif' ? 'checked' : '') : '' }}>
                                 <label for="inputStatus" class="tgl-btn"></label>
+                                <span id="keterangan">{{ array_key_exists('status_pendaftaran', $settings) ? ($settings['status_pendaftaran'] == 'aktif' ? 'Pendaftaran Dibuka' : 'Pendaftaran Ditutup') : '' }}</span>
                             </div>
                         </div>
                     </div>
@@ -58,6 +59,14 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $('#inputStatus').on('change', function(){
+                if ($('#inputStatus').is(':checked')) {
+                    $('#keterangan').text('Pendaftaran Dibuka');
+                } else {
+                    $('#keterangan').text('Pendaftaran Ditutup');
+                }
+            });
 
             //validate parsley form
             const form = document.getElementById("form");

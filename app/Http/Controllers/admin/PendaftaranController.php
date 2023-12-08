@@ -382,7 +382,7 @@ class PendaftaranController extends Controller
                 $pendaftaran->delete();
                 
                 $mailData = [
-                'title' => 'Selamat '. $pendaftaran->nama,
+                'title' => '[Webex] Selamat '. $pendaftaran->nama,
                 'content' => 'Anda telah diterima di Ekstrakurikuler '. $pendaftaran->eskul->nama .'.',
                 'nama' => $pendaftaran->nama,
                 'nis' => $pendaftaran->nis,
@@ -422,7 +422,7 @@ class PendaftaranController extends Controller
             $pendaftaran->delete();
             
             $mailData = [
-                'title' => 'Selamat '. $pendaftaran->nama,
+                'title' => '[Webex] Selamat '. $pendaftaran->nama,
                 'content' => 'Anda telah diterima di Ekstrakurikuler '. $pendaftaran->eskul->nama .'.',
                 'nama' => $pendaftaran->nama,
                 'nis' => $pendaftaran->nis,
@@ -473,7 +473,7 @@ class PendaftaranController extends Controller
         $data->delete();
 
         $mailData = [
-            'title' => 'Jangan menyerah ya ' . $data->nama,
+            'title' => '[Webex] Jangan menyerah ya ' . $data->nama,
             'content' => 'Anda tidak diterima di Ekstrakurikuler '. $data->eskul->nama .'.',
             'nama' => $data->nama,
             'nis' => $data->nis,

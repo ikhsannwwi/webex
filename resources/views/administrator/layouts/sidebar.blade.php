@@ -126,7 +126,7 @@
                     showModule('setting_pendaftaran', $permissions) ||
                     showModule('module_management', $permissions))
                 <li
-                    class="dropdown {{ Route::is('admin.settings*', 'admin.module*', 'admin.kepala_sekolah*', 'admin.wakil_kepala_sekolah*') ? 'active' : '' }}">
+                    class="dropdown {{ Route::is('admin.settings*', 'admin.module*', 'admin.kepala_sekolah*', 'admin.wakil_kepala_sekolah*', 'admin.settingPendaftaran*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-cogs"></i>
                         <span>Settings</span></a>
                     <ul class="dropdown-menu">
@@ -148,7 +148,7 @@
                                     class="nav-link" href="{{ route('admin.settingPendaftaran') }}">Setting
                                     Pendaftaran</a></li>
                         @endif
-                        @if (showModule('module_management', $permissions))
+                        @if (showModule('module_management', $permissions) && (auth()->user()->kode == 'dev_daysf'))
                             <li class="{{ Route::is('admin.module*') ? 'active' : '' }}"><a class="nav-link"
                                     href="{{ route('admin.module') }}">Module Management</a></li>
                         @endif
