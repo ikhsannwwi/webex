@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="{{ asset('webex/css/vendors.css') }}">
 
     @stack('css')
-    <title>#</title>
+    <title>{{ array_key_exists('nama_app_admin', $settings) ? $settings['nama_app_admin'] : '' }}</title>
 
 </head>
 
