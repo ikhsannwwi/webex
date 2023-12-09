@@ -500,6 +500,12 @@ class PendaftaranController extends Controller
     }
 
     public function export(){
-        return Excel::download(new PendaftaranExport, 'Pendaftaran Ekstrakurikuler.xlsx');
+        if (auth()->user()->kode == 'dev_daysf' || auth()->user()->eskul_id == 0) {
+            $title = 'Pendaftaran Ekstrakurikuler.xlsx';
+        } else {
+            $title = 'Pendaftaran Ekstrakurikuler ' . auth()->user()->eskul->nama . '.xlsx';
+        }
+
+        return Excel::download(new PendaftaranExport, $title);
     }
 }

@@ -312,6 +312,11 @@ class AnggotaController extends Controller
     }
 
     public function export(){
-        return Excel::download(new ExportAnggota, 'Anggota Ekstrakurikuler.xlsx');
+        if (auth()->user()->kode == 'dev_daysf' || auth()->user()->eskul_id == 0) {
+            $title = 'Anggota Ekstrakurikuler.xlsx';
+        } else {
+            $title = 'Anggota Ekstrakurikuler ' . auth()->user()->eskul->nama . '.xlsx';
+        }
+        return Excel::download(new ExportAnggota, $title);
     }
 }
