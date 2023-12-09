@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use Excel;
 use DataTables;
 use App\Models\admin\Eskul;
 use App\Models\admin\Kelas;
@@ -12,6 +13,7 @@ use App\Mail\StatusPendaftarMail;
 use App\Models\admin\Pendaftaran;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Exports\Pendaftaran as PendaftaranExport;
 
 class PendaftaranController extends Controller
 {
@@ -495,5 +497,9 @@ class PendaftaranController extends Controller
             'status' => 'success',
             'message' => 'Data telah dihapus.',
         ]);
+    }
+
+    public function export(){
+        return Excel::download(new PendaftaranExport, 'Pendaftaran Ekstrakurikuler.xlsx');
     }
 }

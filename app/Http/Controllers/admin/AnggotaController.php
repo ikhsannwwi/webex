@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use DataTables;
+use Excel;
 use App\Models\admin\Eskul;
 use App\Models\admin\Kelas;
 use Illuminate\Http\Request;
 use App\Models\admin\Anggota;
 use App\Models\admin\Jurusan;
 use App\Http\Controllers\Controller;
+use App\Exports\Anggota as ExportAnggota;
 
 class AnggotaController extends Controller
 {
@@ -307,5 +309,9 @@ class AnggotaController extends Controller
                 ]);
             }
         }
+    }
+
+    public function export(){
+        return Excel::download(new ExportAnggota, 'Anggota Ekstrakurikuler.xlsx');
     }
 }

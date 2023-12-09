@@ -39,7 +39,7 @@ class DashboardController extends Controller
 
     public function getPendaftaran(){
         if (auth()->user()->eskul_id != 0) {
-            $pendaftaran = Pendaftaran::where("eskul_id", auth()->user()->eskul_id)->with('eskul')->orderBy('created_at', 'descw')->limit(5)->get();
+            $pendaftaran = Pendaftaran::where("eskul_id", auth()->user()->eskul_id)->with('eskul')->orderBy('created_at', 'desc')->limit(5)->get();
         }else {
             $pendaftaran = Pendaftaran::with('eskul')->orderBy('created_at', 'desc')->limit(5)->get();
         }

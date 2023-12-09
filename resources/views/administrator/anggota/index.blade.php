@@ -21,9 +21,12 @@
                     </div>
                     <div class="col-4" style="display: flex; justify-content: flex-end;">
                         @if (isallowed('anggota', 'add'))
-                            <a href="{{ route('admin.anggota.add') }}" class="btn btn-primary mx-3">Tambah Data</a>
+                            <a href="{{ route('admin.anggota.add') }}" class="btn btn-primary mx-1">Tambah Data</a>
                         @endif
-                        <a href="javascript:void(0)" class="btn btn-primary" id="filterButton">Filter</a>
+                        <a href="javascript:void(0)" class="btn btn-primary mx-1" id="filterButton">Filter</a>
+                        @if (isallowed('anggota', 'export'))
+                            <a href="{{ route('admin.anggota.export') }}" class="btn btn-primary mx-1">Export Data</a>
+                        @endif
                     </div>
                     
                 </div>

@@ -187,6 +187,7 @@ Route::prefix('admin')->group(function () {
         Route::get('anggota/getEskul', [AnggotaController::class, 'getEskul'])->name('admin.anggota.getEskul');
         Route::get('anggota/getKelas', [AnggotaController::class, 'getKelas'])->name('admin.anggota.getKelas');
         Route::get('anggota/getJurusan', [AnggotaController::class, 'getJurusan'])->name('admin.anggota.getJurusan');
+        Route::get('anggota/export', [AnggotaController::class, 'export'])->name('admin.anggota.export');
 
         //Pendaftaran
         Route::get('pendaftaran', [PendaftaranController::class, 'index'])->name('admin.pendaftaran');
@@ -205,6 +206,7 @@ Route::prefix('admin')->group(function () {
         Route::get('pendaftaran/getJurusan', [PendaftaranController::class, 'getJurusan'])->name('admin.pendaftaran.getJurusan');
         Route::post('pendaftaran/accept', [PendaftaranController::class, 'accept'])->name('admin.pendaftaran.accept');
         Route::delete('pendaftaran/reject', [PendaftaranController::class, 'reject'])->name('admin.pendaftaran.reject');
+        Route::get('pendaftaran/export', [PendaftaranController::class, 'export'])->name('admin.pendaftaran.export');
 
         //Dokumentasi
         Route::get('dokumentasi', [DokumentasiController::class, 'index'])->name('admin.dokumentasi');
