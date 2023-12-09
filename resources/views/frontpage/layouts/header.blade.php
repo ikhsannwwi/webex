@@ -1,6 +1,6 @@
 <header data-anim="{{--fade--}}" data-add-bg="" class="header -type-4 -shadow bg-white border-bottom-light js-header">
 
-    <div class="header__container heighttt py-10">
+    <div class="header__container py-10">
         <div class="row justify-between items-center">
 
             <div class="col-auto">
@@ -8,7 +8,7 @@
 
                     <div class="header__logo">
                         <a>
-                            <img style="width: 125px;" src="{{ array_key_exists('logo_app_admin', $settings) ? img_src($settings['logo_app_admin'], 'settings') : '' }}" alt="logo">
+                            <img style="width: 50px;" src="{{ array_key_exists('logo_app_admin', $settings) ? img_src($settings['logo_app_admin'], 'settings') : '' }}" alt="logo">
                         </a>
                     </div>
 
