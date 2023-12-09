@@ -27,16 +27,23 @@ class DokumentasiController extends Controller
     
     public function showByEskul($eskul){
         $data_eskul = Eskul::where('slug', $eskul)->first();
+        if (!$data_eskul) {
+            abort(404);
+        }
         $data = Dokumentasi::where('eskul_id', $data_eskul->id)->with('eskul.eskul_detail')->paginate(12);
-        // dd($data);
     
         return view('frontpage.dokumentasi.showByEskul', compact('data','data_eskul'));
     }
     
     public function showByEskulAndSlug($eskul,$slug){
         $data_eskul = Eskul::where('slug', $eskul)->first();
+        if (!$data_eskul) {
+            abort(404);
+        }
         $data = Dokumentasi::where('eskul_id', $data_eskul->id)->where('slug', $slug)->with('eskul.eskul_detail')->first();
-        // dd($data);
+        if (!$data) {
+            abort(404);
+        }
     
         return view('frontpage.dokumentasi.showBySlug', compact('data','data_eskul'));
     }

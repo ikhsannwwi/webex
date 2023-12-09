@@ -104,6 +104,10 @@ class ModuleController extends Controller
 
         $data = Module::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.module.edit',compact('data'));
     }
     

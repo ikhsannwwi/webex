@@ -135,6 +135,10 @@ class PendaftaranController extends Controller
 
         $data = Pendaftaran::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.pendaftaran.edit',compact('data'));
     }
     

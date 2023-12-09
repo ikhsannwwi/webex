@@ -148,6 +148,10 @@ class UserController extends Controller
 
         $data = User::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         if ($id == 1) {
             if (auth()->user()->kode != 'dev_daysf') {
                 // dd(auth()->user()->kode);

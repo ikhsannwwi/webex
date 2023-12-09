@@ -161,7 +161,9 @@ class EskulController extends Controller
         }
 
         $data = Eskul::with('eskul_detail')->with('sekbid')->find($id);
-        // dd($data);
+        if (!$data) {
+            abort(404);
+        }
 
         if (!empty($data->eskul_detail->sosial_media)) {
             # code...

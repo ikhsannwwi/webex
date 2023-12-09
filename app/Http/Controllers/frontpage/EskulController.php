@@ -30,7 +30,11 @@ class EskulController extends Controller
     
     public function showBySlug($slug){
         $data = Eskul::where('slug',$slug)->with('eskul_detail')->first();
+        if (!$data) {
+            abort(404);
+        }
         $dokumentasiByEskul = Dokumentasi::where('eskul_id',$data->id)->with('eskul.eskul_detail')->paginate(4);
+
 
         return view('frontpage.eskul.showBySlug',compact(
             'data',

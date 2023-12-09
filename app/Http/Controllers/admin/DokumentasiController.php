@@ -125,6 +125,10 @@ class DokumentasiController extends Controller
 
         $data = Dokumentasi::with('eskul')->find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.dokumentasi.edit',compact('data'));
     }
     

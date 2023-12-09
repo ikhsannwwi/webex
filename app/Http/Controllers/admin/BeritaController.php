@@ -126,6 +126,10 @@ class BeritaController extends Controller
 
         $data = Berita::with('eskul')->find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.berita.edit',compact('data'));
     }
     

@@ -78,6 +78,10 @@ class JadwalController extends Controller
 
         $data = Jadwal::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.jadwal.edit',compact('data'));
     }
     

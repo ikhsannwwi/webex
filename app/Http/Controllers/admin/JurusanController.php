@@ -80,6 +80,10 @@ class JurusanController extends Controller
 
         $data = Jurusan::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.jurusan.edit',compact('data'));
     }
     

@@ -83,6 +83,10 @@ class SekbidController extends Controller
 
         $data = Sekbid::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.sekbid.edit',compact('data'));
     }
     

@@ -82,6 +82,10 @@ class KelasController extends Controller
 
         $data = Kelas::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.kelas.edit',compact('data'));
     }
     

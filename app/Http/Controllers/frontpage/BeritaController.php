@@ -23,6 +23,9 @@ class BeritaController extends Controller
     
     public function showByEskul($eskul){
         $data_eskul = Eskul::where('slug', $eskul)->first();
+        if (!$data_eskul) {
+            abort(404);
+        }
         $data = berita::where('eskul_id', $data_eskul->id)->with('eskul.eskul_detail')->orderBy('created_at', 'DESC')->paginate(9);
         $berita_terbaru = Berita::where('eskul_id', $data_eskul->id)->with('eskul.eskul_detail')->orderBy('created_at', 'DESC')->limit(1)->first();
         $berita_terbaru2 = Berita::where('eskul_id', $data_eskul->id)->with('eskul.eskul_detail')->orderBy('created_at', 'DESC')->skip(1)->take(2)->get();
@@ -37,7 +40,13 @@ class BeritaController extends Controller
     
     public function showByEskulAndSlug($eskul,$slug){
         $data_eskul = Eskul::where('slug', $eskul)->first();
+        if (!$data_eskul) {
+            abort(404);
+        }
         $data = berita::where('eskul_id', $data_eskul->id)->where('slug',$slug)->with('eskul.eskul_detail')->first();
+        if (!$data) {
+            abort(404);
+        }
 
         return view('frontpage.berita.showBySlug', compact(
             'data',

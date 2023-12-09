@@ -120,6 +120,10 @@ class AnggotaController extends Controller
 
         $data = Anggota::find($id);
 
+        if (!$data) {
+            abort(404);
+        }
+
         return view('administrator.anggota.edit',compact('data'));
     }
     
